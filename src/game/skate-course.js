@@ -3,7 +3,7 @@ import {createCourseData} from './skate-course-data.js';
 export function buildSkateCourse(app,world){
  const root=new pc.Entity('Last Light · temporary skate lines');app.root.addChild(root);
  function mat(hex){const m=new pc.StandardMaterial();m.diffuse=new pc.Color(...hex.match(/../g).map(v=>parseInt(v,16)/255));m.gloss=.25;m.update();return m;}
- const concrete=mat('8d9994'),plywood=mat('ae8d61'),trim=mat('d8f87d'),steel=mat('b8c6c4'),dark=mat('344943');
+ const concrete=mat('8d9994'),plywood=mat('ae8d61'),ply=mat('a3845c'),trim=mat('d8f87d'),steel=mat('b8c6c4'),dark=mat('344943');concrete.cull=plywood.cull=pc.CULLFACE_NONE;concrete.update();
  // Panel seams, subtle grain and flush screw heads give the temporary wood
  // transitions scale without adding geometry or draw calls.
  const canvas=document.createElement('canvas');canvas.width=canvas.height=512;const ctx=canvas.getContext('2d');ctx.fillStyle='#b2966f';ctx.fillRect(0,0,512,512);
@@ -28,10 +28,13 @@ export function buildSkateCourse(app,world){
   let arc=0,previousHeight=0;for(let i=0;i<=slices;i++){const z=b.z-b.length/2+b.length*i/slices,h=data.heightAt(b,z);if(i)arc+=Math.hypot(b.length/slices,h-previousHeight);previousHeight=h;for(let j=0;j<=columns;j++){const x=b.x-b.width/2+b.width*j/columns;vertices.push(x,world.terrainAt(x,z)+h+.022,z);uvs.push((x-b.x)/1.22,arc/2.44);}}
   for(let i=0;i<slices;i++)for(let j=0;j<columns;j++){const a=i*(columns+1)+j,n=a+columns+1;indices.push(a,n,a+1,a+1,n,n+1);}
   const mesh=pc.createMesh(app.graphicsDevice,vertices,{indices,uvs,normals:pc.calculateNormals(vertices,indices)}),e=new pc.Entity(b.name+' rideable surface');e.addComponent('render',{meshInstances:[new pc.MeshInstance(mesh,b.kind==='halfpipe'?plywood:concrete)]});root.addChild(e);
+  // A halfpipe is a solid object from every side: a plywood back wall closes each
+  // transition, studs and cross braces read as framing.
+  if(b.kind==='halfpipe')for(const sign of [-1,1]){const zEnd=b.z+sign*b.length/2,h=b.height+.06;box(b.name+' back wall',b.x,h/2,zEnd+sign*.05,b.width+.07,h,.09,ply);for(const x of [b.x-b.width/2+.08,b.x,b.x+b.width/2-.08])box(b.name+' back stud',x,h/2,zEnd+sign*.12,.09,h,.06,dark);for(const y of [h*.33,h*.72])box(b.name+' back brace',b.x,y,zEnd+sign*.12,b.width,.07,.05,dark);}
   for(const sign of [-1,1])for(let i=0;i<slices;i++){const z=b.z-b.length/2+b.length*(i+.5)/slices,h=data.heightAt(b,z);if(h>.025)box(b.name+' side panel',b.x+sign*b.width/2,h/2,z,.035,h,b.length/slices+.01,dark);}
   const lips=b.kind==='halfpipe'?[b.z-b.length/2,b.z+b.length/2]:[b.z];
   for(const z of lips)box(b.name+' coping',b.x,b.height+.10,z,b.width+.1,.08,.11,steel);
-  if(b.kind==='halfpipe')for(const z of lips){box(b.name+' deck',b.x,b.height+.02,z+(z<b.z?-.4:.4),b.width,.14,.8,plywood);for(const x of [b.x-b.width/2,b.x+b.width/2])box(b.name+' deck support',x,b.height/2,z,.08,b.height,.08,dark);}
+  if(b.kind==='halfpipe')for(const z of lips){box(b.name+' deck',b.x,b.height+.02,z+(z<b.z?-.4:.4),b.width,.14,.8,ply);for(const x of [b.x-b.width/2,b.x+b.width/2])box(b.name+' deck support',x,b.height/2,z,.08,b.height,.08,dark);}
   for(let z=b.z-b.length/2+.25;z<b.z+b.length/2;z+=.55)if(data.heightAt(b,z)>.16)for(let x=b.x-b.width/2+.2;x<b.x+b.width/2;x+=.5)obstacles.push({x,z,r:.27});
   for(const x of [b.x-b.width/2-.15,b.x+b.width/2+.15])box(b.name+' entrance stripe',x,.022,b.z,.1,.025,b.kind==='halfpipe'?b.flat:1,trim);
  }

@@ -1,6 +1,7 @@
 // Development-only browser diagnostics. Vite eliminates this module from build.
 // Run via visible buttons at ?qa=1. Simulates the real game loop and weapons.
 export function installQA(api){
+ window.__QA__=api;
  const panel=document.createElement('details');panel.id='qa-panel';panel.style='position:fixed;z-index:50;left:10px;bottom:8px;max-width:580px;max-height:44vh;overflow:auto;background:#071e22ef;color:#d8f87d;padding:9px;font:11px monospace;border:1px solid #7c986c';panel.innerHTML='<summary>Development diagnostics</summary><button id="qa-campaign">Play full survival run</button> <button id="qa-runner">Check runner portals</button> <button id="qa-runner-practice">Practice runner</button> <button id="qa-skate">Check skate course</button> <button id="qa-halfpipe">Practice halfpipe</button> <button id="qa-yeet-practice">Practice YEET controls</button> <button id="qa-combat">Check horde equipment & yeet</button> <button id="qa-run">Run integrated checks</button> <button id="qa-autoplay">Play one wave</button> <button id="qa-late">Play final wave</button> <button id="qa-stop">Stop test</button><pre id="qa-results"></pre><output id="qa-state"></output>';document.body.appendChild(panel);
  const results=document.querySelector('#qa-results'),state=document.querySelector('#qa-state');let stopped=false;
  function check(label,ok,detail=''){results.textContent+=`${ok?'PASS':'FAIL'} ${label}${detail?' · '+detail:''}\n`;if(!ok)throw new Error(label);}

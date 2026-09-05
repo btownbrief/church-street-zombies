@@ -20,3 +20,74 @@
 #runner-enter{position:absolute;top:140px;left:50%;transform:translateX(-50%);pointer-events:auto;background:#50377de8;border:1px solid #caacf5;border-radius:4px;color:#f0ddff;font-size:10px;font-weight:bold;letter-spacing:1px;padding:12px 18px}#runner-hud{position:fixed;inset:0;z-index:3;pointer-events:none}#runner-swipe{position:absolute;inset:70px 0 0;pointer-events:auto;touch-action:none;user-select:none;-webkit-user-select:none}.runner-left,.runner-right{position:absolute;top:94px;text-shadow:0 2px 5px #122627}.runner-left{left:34px}.runner-right{right:34px;text-align:right}.runner-left>span,.runner-right>span{display:block;font-size:9px;letter-spacing:2px;color:#d8f87d;font-weight:800}.runner-left>strong,.runner-right>strong{display:block;font-size:36px;margin-top:5px}.runner-left>b{display:block;color:#d5f383;letter-spacing:5px;margin-top:8px}.runner-right>p{font-size:10px;letter-spacing:1px}.runner-bottom{position:absolute;left:50%;bottom:35px;transform:translateX(-50%);text-align:center;width:90%;text-shadow:0 1px 6px #102324}.runner-bottom>b{color:#e1c6ff;font-size:12px;letter-spacing:2px}.runner-bottom p{font-size:9px;letter-spacing:1px}.runner-bottom .mobile-guide{line-height:1.6}#runner-exit{position:absolute;left:50%;top:32px;transform:translateX(-50%);pointer-events:auto;background:#483c66d9;border:1px solid #baa0de99;border-radius:4px;padding:11px 15px;font-size:9px;letter-spacing:1px;font-weight:800}.running #shade{opacity:0}
 @media(max-width:650px){#runner-enter{top:270px;font-size:9px}.runner-left{left:20px;top:94px}.runner-right{right:20px;top:94px}.runner-left>strong,.runner-right>strong{font-size:28px}#runner-exit{top:191px;min-height:44px}.runner-bottom{bottom:35px}.running .brand{font-size:17px}}
 @media(max-height:500px) and (min-width:651px){#runner-enter{top:117px}.runner-left,.runner-right{top:78px}.runner-left>strong,.runner-right>strong{font-size:27px}.runner-bottom{bottom:22px}#runner-exit{top:26px}}
+
+/* ---- Touch layout (phones and tablets) ------------------------------------------
+   One clean arrangement that wins over the older touch rules above: a thin status band
+   across the top, the view kept clear, movement bottom-left, the shooter cluster
+   bottom-right, equipment as three small round buttons, and nothing in the middle. */
+body.touch-mode.playing #masthead{top:max(8px,env(safe-area-inset-top));left:auto;right:max(10px,env(safe-area-inset-right));gap:0}
+body.touch-mode.playing .brand,body.touch-mode.playing #sound,body.touch-mode.playing #radar,body.touch-mode.playing #equipment-counts,body.touch-mode.playing .weapon-panel p,body.touch-mode.playing #joystick>span,body.touch-mode.playing #joystick:before{display:none}
+body.touch-mode.playing #pause{width:36px;height:34px;padding:0;font-size:12px;background:#10232480}
+body.touch-mode #hud .wave-panel{left:max(12px,env(safe-area-inset-left));top:max(10px,env(safe-area-inset-top))}
+body.touch-mode #hud .wave-panel .eyebrow{font-size:7px;letter-spacing:1.2px}
+body.touch-mode #hud .wave-panel>div{gap:6px;margin-top:2px;align-items:baseline}
+body.touch-mode #hud .wave-panel strong{font-size:22px;letter-spacing:-1px}
+body.touch-mode #hud .wave-panel>div>span{font-size:7px;letter-spacing:1px}
+body.touch-mode #hud .wave-panel b{display:inline;margin:0 0 0 3px;font-size:7px}
+body.touch-mode #hud .wave-panel p{font-size:8px;margin:2px 0 0;color:#dbe6d3}
+body.touch-mode #hud .score-panel{right:calc(max(10px,env(safe-area-inset-right)) + 46px);top:max(10px,env(safe-area-inset-top))}
+body.touch-mode #hud .score-panel .eyebrow{font-size:7px}
+body.touch-mode #hud .score-panel strong{font-size:18px;margin-top:2px}
+body.touch-mode #hud .score-panel #combo{font-size:8px;margin-top:2px}
+body.touch-mode #hud #objective{top:max(8px,env(safe-area-inset-top));width:40%;max-width:320px;padding:0}
+body.touch-mode #hud #objective>span{font-size:8px;letter-spacing:1.4px}
+body.touch-mode #hud #objective p{font-size:8px;margin-top:3px;line-height:1.35;color:#e2e8d6}
+body.touch-mode #hud #mode-switch{top:calc(max(8px,env(safe-area-inset-top)) + 42px);left:auto;right:max(10px,env(safe-area-inset-right));transform:none;padding:8px 11px;font-size:8px;min-width:0;letter-spacing:1px}
+body.touch-mode #hud #runner-enter{top:calc(max(8px,env(safe-area-inset-top)) + 44px);font-size:8px;padding:9px 12px}
+body.touch-mode #hud .vitals{left:max(14px,env(safe-area-inset-left));bottom:148px;width:118px}
+body.touch-mode #hud .vital-label{font-size:7px;letter-spacing:1.4px}
+body.touch-mode #hud .vital-label strong{font-size:17px}
+body.touch-mode #hud .vitals .meter{height:4px;margin-top:4px}
+body.touch-mode #hud .stamina-line{margin-top:5px;font-size:6px;gap:6px}
+body.touch-mode #hud .weapon-panel{right:max(12px,env(safe-area-inset-right));bottom:176px;width:auto}
+body.touch-mode #hud .weapon-panel>span{font-size:7px;letter-spacing:1.4px}
+body.touch-mode #hud .weapon-panel>div:not(.meter){margin:1px 0 2px}
+body.touch-mode #hud .weapon-panel strong{font-size:24px;letter-spacing:-1px}
+body.touch-mode #hud .weapon-panel b{font-size:11px;margin-left:5px}
+body.touch-mode #hud .reload-meter{height:2px;width:92px;margin-left:auto}
+body.touch-mode #hud #equipment{bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:1}
+body.touch-mode #hud #equipment button{position:relative;width:44px;height:44px;min-width:0;padding:0;border-radius:50%;font-size:0;background:#11302ea6;border:1px solid #d8f87d55}
+body.touch-mode #hud #equipment button b{font-size:13px;font-weight:800;color:var(--lime)}
+body.touch-mode #hud #equipment button span{display:none}
+body.touch-mode #hud #equipment button i{position:absolute;top:-4px;right:-4px;min-width:16px;height:16px;border-radius:8px;background:var(--lime);color:var(--ink);font-style:normal;font-size:9px;font-weight:800;line-height:16px;text-align:center;padding:0 3px}
+body.touch-mode #hud #yeet-meter{top:57%;width:130px;font-size:7px}
+body.touch-mode #hud #skate-status{bottom:16px;font-size:9px;padding:7px 11px;letter-spacing:1.4px}
+body.touch-mode #toast{top:17%;font-size:10px;padding:9px 14px;width:auto;max-width:70%}
+body.touch-mode #look-zone{left:34%;top:56px}
+body.touch-mode #joystick{left:max(18px,env(safe-area-inset-left));bottom:max(18px,env(safe-area-inset-bottom));width:112px;height:112px;background:#12302f48}
+body.touch-mode #stick{left:35px;top:35px;width:42px;height:42px}
+#sprint-badge{position:absolute;left:calc(max(18px,env(safe-area-inset-left)) + 118px);bottom:calc(max(18px,env(safe-area-inset-bottom)) + 44px);font-size:8px;letter-spacing:1.5px;color:#e4ecd7;opacity:.35;pointer-events:none;transition:opacity .15s,color .15s}
+#sprint-badge:before{content:'» '}
+body.sprinting #sprint-badge{opacity:1;color:var(--lime);text-shadow:0 0 12px #d8f87d99}
+body.skating #sprint-badge{display:none}
+body.touch-mode #touch button{font-size:22px}
+body.touch-mode #touch button span{font-size:7px}
+body.touch-mode #touch-fire{right:max(16px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));width:80px;height:80px}
+body.touch-mode #touch-reload{right:calc(max(16px,env(safe-area-inset-right)) + 90px);bottom:max(12px,env(safe-area-inset-bottom));width:52px;height:52px}
+body.touch-mode #touch-swap{right:calc(max(16px,env(safe-area-inset-right)) + 92px);bottom:calc(max(12px,env(safe-area-inset-bottom)) + 62px);width:48px;height:48px}
+body.touch-mode #touch-yeet{right:calc(max(16px,env(safe-area-inset-right)) + 22px);bottom:calc(max(16px,env(safe-area-inset-bottom)) + 92px);width:58px;height:58px}
+body.touch-mode .modal{padding:22px}
+@media(orientation:portrait){
+ body.touch-mode #hud #objective{top:calc(max(8px,env(safe-area-inset-top)) + 58px);width:86%;max-width:none}
+ body.touch-mode #hud #mode-switch{top:calc(max(8px,env(safe-area-inset-top)) + 100px);right:50%;transform:translateX(50%)}
+ body.touch-mode #hud #runner-enter{top:calc(max(8px,env(safe-area-inset-top)) + 140px)}
+ body.touch-mode #hud #equipment{left:max(14px,env(safe-area-inset-left));transform:none;bottom:150px}
+ body.touch-mode #hud .vitals{bottom:212px;width:140px}
+ body.touch-mode #hud .weapon-panel{bottom:190px}
+ body.touch-mode #hud #skate-status{bottom:150px}
+ body.touch-mode #look-zone{left:0;top:200px}
+}
+body.skating #hud #equipment{display:none}
+body.touch-mode #hud #equipment button b{display:none}
+body.touch-mode #hud #equipment button span{display:block;font-size:6.5px;letter-spacing:.6px;color:var(--lime);font-weight:800;margin:0}
+body.touch-mode #toast{top:30%}
