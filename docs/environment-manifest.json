@@ -1,0 +1,86 @@
+{
+  "source": "/Users/stephendavis/Projects/church-street-world",
+  "sourceCommit": "af8f40284ee4aee69d711ad14f71b72db8fd4c4a",
+  "files": [
+    {
+      "path": "src/terrain.js",
+      "sha256": "09d31e908dbe4e152cfed69e7dcb71bd53dd62686d42ccea5bb12d1b82d24353",
+      "matchesSource": true
+    },
+    {
+      "path": "src/world.js",
+      "sha256": "27945fe63a81bf0e9e6dfe76a9ad3b37e6d7ecbecd2357f442a82c7fb126f24f",
+      "matchesSource": true
+    },
+    {
+      "path": "src/south-landmarks.js",
+      "sha256": "4df7cd1472f1d9e5b905fd959fa16a96aea5a7213365b7091de689628fe4ef2c",
+      "matchesSource": true
+    },
+    {
+      "path": "src/export-world.js",
+      "sha256": "a2f0d8ac64a994099186a459f4535fe240ba7d478f5965f1dea355ea46a1d7ce",
+      "matchesSource": true
+    },
+    {
+      "path": "src/church-landmark.js",
+      "sha256": "85c5026093d8b02e4a3af5971d56c3cd04ac3f52654fdb461bdb2f7fce4a4289",
+      "matchesSource": true
+    },
+    {
+      "path": "src/public-art.js",
+      "sha256": "7798efdd1e73f3512e95da4b770d21ae21535842a7e3e60928c7d13623e48bb6",
+      "matchesSource": true
+    },
+    {
+      "path": "src/facade-catalog.js",
+      "sha256": "cb0b65090226cdea6d2d5adc3c5eb3bf8bac924e076ec071f89c8e89337c1b2b",
+      "matchesSource": true
+    },
+    {
+      "path": "src/street-props.js",
+      "sha256": "2636e97931d9335a5f4070cb849056ec096fb47100969a708769e4692fb68ec1",
+      "matchesSource": true
+    },
+    {
+      "path": "src/architecture.js",
+      "sha256": "3a0769dbd5ec4e7e86df78c771a6d9933b91afea151d6ff8df6b7a04e6130f95",
+      "matchesSource": true
+    },
+    {
+      "path": "src/whim-infill.js",
+      "sha256": "1a5ac3236280478654d5aa84c389eb247cb0cf673dc87778c444c1fbc7b88eaa",
+      "matchesSource": true
+    },
+    {
+      "path": "src/data/grade.json",
+      "sha256": "4471ee8aa57499e58141820e0f5e35403f63436409632b08c93d8e608e2e0442",
+      "matchesSource": true
+    },
+    {
+      "path": "src/data/geography.json",
+      "sha256": "6a9cf8fa796b56b6c0d8ae23f2e066d64dd5bc20890131a512acde95784d1971",
+      "matchesSource": true
+    },
+    {
+      "path": "src/data/frontages.json",
+      "sha256": "519d12d70d8332da7b105ed0e2bb5e6199e0e68bf4fb8df51405bba4489c7554",
+      "matchesSource": true
+    },
+    {
+      "path": "src/data/roof-elevations.json",
+      "sha256": "c61bc22fd9560838a4d12b71f7cfd68bd64a44f89b08e85fb1cf1b759bf157e8",
+      "matchesSource": true
+    },
+    {
+      "path": "research/terrain/dem-grid-2m.json",
+      "sha256": "7c156b16f788c7c0083b3586cc0323e791566e2a82b4a03afc892d0507ccba92",
+      "matchesSource": true
+    },
+    {
+      "path": "public/reference-textures/northfield-sign.png",
+      "sha256": "df541db9c5fe3c6e4cb1dd50b8beecec3719a9f5a28120279d7429392b863151",
+      "matchesSource": true
+    }
+  ]
+}

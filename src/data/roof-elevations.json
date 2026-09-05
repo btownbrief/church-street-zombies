@@ -1,0 +1,26 @@
+{
+  "source": "VCGI 2023 first-return DSM; dominant flat roof surfaces inspected against footprint masks and depth bands",
+  "datum": "NAVD88/GEOID18 metres",
+  "pixelSpacingM": 0.35,
+  "interpretation": "Roof planes only. Street parapets remain separately interpreted from the videos. Three decimal places retain raster values and do not imply millimetre accuracy.",
+  "byFootprint": {
+    "4865": {
+      "elevationM": 73.416
+    },
+    "4871": {
+      "elevationM": 74.018
+    },
+    "4884": {
+      "elevationM": 75.644
+    },
+    "5020": {
+      "elevationM": 73.044
+    },
+    "5106": {
+      "elevationM": 74.314
+    },
+    "5297": {
+      "elevationM": 77.951
+    }
+  }
+}

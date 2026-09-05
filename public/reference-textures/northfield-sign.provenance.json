@@ -1,0 +1,82 @@
+{
+  "source_frame": "references-recovered/bank-0160.png",
+  "source_video": "/Users/stephendavis/Downloads/YTDown.com_YouTube_The-Best-area-in-Burlington-Vermont-is-C_Media_XMMZhJdRkWA_001_1080p.mp4",
+  "source_time_seconds": 160,
+  "source_frame_size": [
+    1920,
+    1080
+  ],
+  "source_sha256": "fad55e760226f2af345ecd29ba79ba3946c2385d8b3a173a5e0d74778ca37db1",
+  "corner_order": [
+    "top_left",
+    "top_right",
+    "bottom_right",
+    "bottom_left"
+  ],
+  "visually_observed_panel_corners_pixels": [
+    [
+      1105,
+      418
+    ],
+    [
+      1363,
+      397
+    ],
+    [
+      1363,
+      491
+    ],
+    [
+      1105,
+      499
+    ]
+  ],
+  "sample_corners_pixels": [
+    [
+      1108,
+      420
+    ],
+    [
+      1361,
+      399
+    ],
+    [
+      1361,
+      488
+    ],
+    [
+      1108,
+      496
+    ]
+  ],
+  "output_size": [
+    1024,
+    336
+  ],
+  "output_to_source_perspective_coefficients": [
+    0.05298362384263083,
+    0.0,
+    1108.0,
+    -0.07749843487429568,
+    0.22686567164179106,
+    420.0,
+    -0.00014278339758586224,
+    0.0
+  ],
+  "resampling": "Pillow bicubic; one perspective transform",
+  "operations_not_performed": [
+    "generative repainting",
+    "lettering replacement",
+    "shadow removal",
+    "color correction",
+    "sharpening"
+  ],
+  "uncertainties": [
+    "Corners manually picked within roughly 2 source pixels.",
+    "Physical sign aspect ratio is not measured; 1024x336 preserves the approximate mean sampled edge ratio. A homography cannot independently recover physical aspect ratio from four image corners.",
+    "Source content covers only about 253x83 pixels; upscaling does not create detail.",
+    "Tree shadows, warm directional lighting, compression and blur remain baked into the pixels.",
+    "The sample polygon is slightly inset, excluding the outermost dark sign edge."
+  ],
+  "output": "source-recovered/public/reference-textures/northfield-sign.png"
+}

@@ -1,0 +1,3174 @@
+[
+  {
+    "footprintId": 4832,
+    "side": "east",
+    "frontX": 8.76,
+    "frontZStart": 9.56,
+    "frontZEnd": 47.36,
+    "frontWidth": 37.8,
+    "addressRanges": [],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": 8.759,
+      "maxX": 55.082,
+      "minZ": 9.564,
+      "maxZ": 47.744
+    },
+    "rings": [
+      [
+        [
+          8.759,
+          47.362
+        ],
+        [
+          29.389,
+          47.532
+        ],
+        [
+          34.039,
+          47.576
+        ],
+        [
+          55.012,
+          47.744
+        ],
+        [
+          55.082,
+          39.819
+        ],
+        [
+          45.064,
+          39.736
+        ],
+        [
+          45.068,
+          37.907
+        ],
+        [
+          38.982,
+          37.858
+        ],
+        [
+          34.113,
+          37.822
+        ],
+        [
+          34.256,
+          20.142
+        ],
+        [
+          36.097,
+          20.162
+        ],
+        [
+          36.115,
+          17.113
+        ],
+        [
+          34.273,
+          17.093
+        ],
+        [
+          34.352,
+          9.778
+        ],
+        [
+          9.103,
+          9.564
+        ],
+        [
+          8.842,
+          38.217
+        ],
+        [
+          8.759,
+          47.362
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 4834,
+    "side": "west",
+    "frontX": -11.05,
+    "frontZStart": 10.88,
+    "frontZEnd": 36.49,
+    "frontWidth": 25.61,
+    "addressRanges": [
+      "1-7"
+    ],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": -41.512,
+      "maxX": -11.05,
+      "minZ": 10.838,
+      "maxZ": 36.493
+    },
+    "rings": [
+      [
+        [
+          -11.05,
+          10.881
+        ],
+        [
+          -41.487,
+          10.838
+        ],
+        [
+          -41.512,
+          36.451
+        ],
+        [
+          -11.075,
+          36.493
+        ],
+        [
+          -11.05,
+          10.881
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 4865,
+    "side": "west",
+    "frontX": -11.03,
+    "frontZStart": 37.06,
+    "frontZEnd": 45.03,
+    "frontWidth": 7.97,
+    "addressRanges": [],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": -30.022,
+      "maxX": -11.033,
+      "minZ": 36.853,
+      "maxZ": 45.032
+    },
+    "rings": [
+      [
+        [
+          -30.007,
+          36.853
+        ],
+        [
+          -30.022,
+          44.999
+        ],
+        [
+          -11.042,
+          45.032
+        ],
+        [
+          -11.033,
+          37.057
+        ],
+        [
+          -30.007,
+          36.853
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 4871,
+    "side": "west",
+    "frontX": -11.04,
+    "frontZStart": 45.77,
+    "frontZEnd": 54.48,
+    "frontWidth": 8.71,
+    "addressRanges": [
+      "11-17"
+    ],
+    "municipalNamesUnverified": [
+      "Eddie Bauer"
+    ],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": -44.33,
+      "maxX": -11.038,
+      "minZ": 41.76,
+      "maxZ": 54.476
+    },
+    "rings": [
+      [
+        [
+          -36.992,
+          41.775
+        ],
+        [
+          -44.297,
+          41.76
+        ],
+        [
+          -44.317,
+          45.762
+        ],
+        [
+          -44.33,
+          46.106
+        ],
+        [
+          -44.258,
+          54.427
+        ],
+        [
+          -11.042,
+          54.476
+        ],
+        [
+          -11.038,
+          45.767
+        ],
+        [
+          -32.11,
+          45.736
+        ],
+        [
+          -32.119,
+          43.422
+        ],
+        [
+          -36.989,
+          43.417
+        ],
+        [
+          -36.992,
+          41.775
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 4879,
+    "side": "east",
+    "frontX": 8.19,
+    "frontZStart": 47.36,
+    "frontZEnd": 64.73,
+    "frontWidth": 17.37,
+    "addressRanges": [],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": 8.19,
+      "maxX": 29.389,
+      "minZ": 47.36,
+      "maxZ": 64.821
+    },
+    "rings": [
+      [
+        [
+          8.759,
+          47.362
+        ],
+        [
+          8.291,
+          47.36
+        ],
+        [
+          8.19,
+          64.729
+        ],
+        [
+          27.512,
+          64.821
+        ],
+        [
+          27.538,
+          57.238
+        ],
+        [
+          29.316,
+          57.256
+        ],
+        [
+          29.345,
+          53.035
+        ],
+        [
+          29.389,
+          47.532
+        ],
+        [
+          8.759,
+          47.362
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 4884,
+    "side": "west",
+    "frontX": -11.05,
+    "frontZStart": 54.84,
+    "frontZEnd": 65.19,
+    "frontWidth": 10.35,
+    "addressRanges": [
+      "19-21"
+    ],
+    "municipalNamesUnverified": [
+      "Tina's Fabrics"
+    ],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": -60.755,
+      "maxX": -11.055,
+      "minZ": 46.089,
+      "maxZ": 65.187
+    },
+    "rings": [
+      [
+        [
+          -44.33,
+          46.106
+        ],
+        [
+          -60.719,
+          46.089
+        ],
+        [
+          -60.722,
+          55.611
+        ],
+        [
+          -60.755,
+          65.117
+        ],
+        [
+          -45.053,
+          65.14
+        ],
+        [
+          -44.397,
+          65.148
+        ],
+        [
+          -32.691,
+          65.151
+        ],
+        [
+          -11.057,
+          65.187
+        ],
+        [
+          -11.055,
+          54.835
+        ],
+        [
+          -44.302,
+          54.785
+        ],
+        [
+          -44.258,
+          54.427
+        ],
+        [
+          -44.33,
+          46.106
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 4910,
+    "side": "west",
+    "frontX": -11.06,
+    "frontZStart": 65.19,
+    "frontZEnd": 72.35,
+    "frontWidth": 7.16,
+    "addressRanges": [],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": -35.304,
+      "maxX": -11.057,
+      "minZ": 65.151,
+      "maxZ": 72.348
+    },
+    "rings": [
+      [
+        [
+          -32.691,
+          65.151
+        ],
+        [
+          -32.682,
+          70.062
+        ],
+        [
+          -35.304,
+          70.06
+        ],
+        [
+          -35.304,
+          71.765
+        ],
+        [
+          -32.681,
+          71.766
+        ],
+        [
+          -32.702,
+          72.344
+        ],
+        [
+          -11.068,
+          72.348
+        ],
+        [
+          -11.057,
+          65.187
+        ],
+        [
+          -32.691,
+          65.151
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 4908,
+    "side": "east",
+    "frontX": 8.95,
+    "frontZStart": 65.2,
+    "frontZEnd": 81.66,
+    "frontWidth": 16.46,
+    "addressRanges": [
+      "20-26"
+    ],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": 8.948,
+      "maxX": 31.487,
+      "minZ": 65.197,
+      "maxZ": 81.774
+    },
+    "rings": [
+      [
+        [
+          27.271,
+          81.747
+        ],
+        [
+          31.453,
+          81.774
+        ],
+        [
+          31.487,
+          75.677
+        ],
+        [
+          29.677,
+          75.658
+        ],
+        [
+          29.688,
+          75.361
+        ],
+        [
+          24.195,
+          75.333
+        ],
+        [
+          24.249,
+          65.265
+        ],
+        [
+          9.016,
+          65.197
+        ],
+        [
+          8.948,
+          81.66
+        ],
+        [
+          21.184,
+          81.713
+        ],
+        [
+          24.15,
+          81.727
+        ],
+        [
+          27.271,
+          81.747
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 4918,
+    "side": "west",
+    "frontX": -11.07,
+    "frontZStart": 72.35,
+    "frontZEnd": 84.18,
+    "frontWidth": 11.84,
+    "addressRanges": [
+      "25-27",
+      "23"
+    ],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": -46.399,
+      "maxX": -11.068,
+      "minZ": 72.332,
+      "maxZ": 84.184
+    },
+    "rings": [
+      [
+        [
+          -32.702,
+          72.344
+        ],
+        [
+          -46.376,
+          72.332
+        ],
+        [
+          -46.366,
+          73.771
+        ],
+        [
+          -46.399,
+          84.137
+        ],
+        [
+          -11.092,
+          84.184
+        ],
+        [
+          -11.068,
+          72.348
+        ],
+        [
+          -32.702,
+          72.344
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 4937,
+    "side": "east",
+    "frontX": 8.95,
+    "frontZStart": 81.66,
+    "frontZEnd": 88.68,
+    "frontWidth": 7.02,
+    "addressRanges": [
+      "28"
+    ],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": 8.948,
+      "maxX": 27.271,
+      "minZ": 81.66,
+      "maxZ": 88.766
+    },
+    "rings": [
+      [
+        [
+          8.948,
+          81.66
+        ],
+        [
+          8.974,
+          88.681
+        ],
+        [
+          21.148,
+          88.733
+        ],
+        [
+          27.234,
+          88.766
+        ],
+        [
+          27.247,
+          87.547
+        ],
+        [
+          27.271,
+          81.747
+        ],
+        [
+          24.15,
+          81.727
+        ],
+        [
+          21.184,
+          81.713
+        ],
+        [
+          8.948,
+          81.66
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 4926,
+    "side": "west",
+    "frontX": -11.09,
+    "frontZStart": 84.18,
+    "frontZEnd": 114.99,
+    "frontWidth": 30.8,
+    "addressRanges": [
+      "29-35"
+    ],
+    "municipalNamesUnverified": [
+      "Nick and Morrissey Building"
+    ],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": -72.613,
+      "maxX": -11.092,
+      "minZ": 73.727,
+      "maxZ": 114.986
+    },
+    "rings": [
+      [
+        [
+          -46.366,
+          73.771
+        ],
+        [
+          -61.287,
+          73.745
+        ],
+        [
+          -72.557,
+          73.727
+        ],
+        [
+          -72.613,
+          108.782
+        ],
+        [
+          -70.771,
+          108.787
+        ],
+        [
+          -70.791,
+          112.758
+        ],
+        [
+          -65.921,
+          112.762
+        ],
+        [
+          -65.936,
+          114.888
+        ],
+        [
+          -61.347,
+          114.899
+        ],
+        [
+          -11.151,
+          114.986
+        ],
+        [
+          -11.092,
+          84.184
+        ],
+        [
+          -46.399,
+          84.137
+        ],
+        [
+          -46.366,
+          73.771
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 4942,
+    "side": "east",
+    "frontX": 8.94,
+    "frontZStart": 88.68,
+    "frontZEnd": 96.61,
+    "frontWidth": 7.93,
+    "addressRanges": [
+      "30"
+    ],
+    "municipalNamesUnverified": [
+      "Apple Mountain"
+    ],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": 8.936,
+      "maxX": 30.306,
+      "minZ": 87.547,
+      "maxZ": 96.943
+    },
+    "rings": [
+      [
+        [
+          8.974,
+          88.681
+        ],
+        [
+          8.936,
+          96.608
+        ],
+        [
+          27.187,
+          96.943
+        ],
+        [
+          27.218,
+          96.084
+        ],
+        [
+          30.245,
+          96.1
+        ],
+        [
+          30.306,
+          87.564
+        ],
+        [
+          27.247,
+          87.547
+        ],
+        [
+          27.234,
+          88.766
+        ],
+        [
+          21.148,
+          88.733
+        ],
+        [
+          8.974,
+          88.681
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 4958,
+    "side": "east",
+    "frontX": 8.66,
+    "frontZStart": 96.61,
+    "frontZEnd": 106.0,
+    "frontWidth": 9.39,
+    "addressRanges": [
+      "32"
+    ],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": 8.657,
+      "maxX": 27.873,
+      "minZ": 96.608,
+      "maxZ": 106.099
+    },
+    "rings": [
+      [
+        [
+          27.187,
+          96.943
+        ],
+        [
+          8.936,
+          96.608
+        ],
+        [
+          8.657,
+          105.995
+        ],
+        [
+          8.969,
+          105.991
+        ],
+        [
+          27.853,
+          106.099
+        ],
+        [
+          27.873,
+          96.952
+        ],
+        [
+          27.187,
+          96.943
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 4971,
+    "side": "east",
+    "frontX": 8.9,
+    "frontZStart": 105.99,
+    "frontZEnd": 116.39,
+    "frontWidth": 10.4,
+    "addressRanges": [
+      "34-36"
+    ],
+    "municipalNamesUnverified": [
+      "Ben and Jerry's Ice Cream"
+    ],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": 8.903,
+      "maxX": 27.853,
+      "minZ": 105.991,
+      "maxZ": 116.479
+    },
+    "rings": [
+      [
+        [
+          8.969,
+          105.991
+        ],
+        [
+          8.903,
+          116.387
+        ],
+        [
+          27.787,
+          116.479
+        ],
+        [
+          27.853,
+          106.099
+        ],
+        [
+          8.969,
+          105.991
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5020,
+    "side": "west",
+    "frontX": -10.98,
+    "frontZStart": 134.3,
+    "frontZEnd": 166.01,
+    "frontWidth": 31.71,
+    "addressRanges": [
+      "37-43"
+    ],
+    "municipalNamesUnverified": [
+      "Outdoor Gear Exchange"
+    ],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": -79.489,
+      "maxX": -10.979,
+      "minZ": 134.222,
+      "maxZ": 175.092
+    },
+    "rings": [
+      [
+        [
+          -11.008,
+          166.014
+        ],
+        [
+          -10.979,
+          134.304
+        ],
+        [
+          -76.098,
+          134.222
+        ],
+        [
+          -76.12,
+          163.18
+        ],
+        [
+          -79.461,
+          163.184
+        ],
+        [
+          -79.489,
+          169.109
+        ],
+        [
+          -79.487,
+          175.067
+        ],
+        [
+          -62.442,
+          175.092
+        ],
+        [
+          -62.422,
+          165.945
+        ],
+        [
+          -11.008,
+          166.014
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5017,
+    "side": "east",
+    "frontX": 8.79,
+    "frontZStart": 135.01,
+    "frontZEnd": 152.08,
+    "frontWidth": 17.07,
+    "addressRanges": [
+      "38-44"
+    ],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": 8.792,
+      "maxX": 37.445,
+      "minZ": 135.007,
+      "maxZ": 152.121
+    },
+    "rings": [
+      [
+        [
+          8.792,
+          152.082
+        ],
+        [
+          25.524,
+          152.096
+        ],
+        [
+          37.106,
+          152.11
+        ],
+        [
+          37.418,
+          152.121
+        ],
+        [
+          37.445,
+          135.047
+        ],
+        [
+          25.552,
+          135.021
+        ],
+        [
+          8.819,
+          135.007
+        ],
+        [
+          8.792,
+          152.082
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5030,
+    "side": "east",
+    "frontX": 8.78,
+    "frontZStart": 152.08,
+    "frontZEnd": 167.92,
+    "frontWidth": 15.84,
+    "addressRanges": [
+      "46-50"
+    ],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": 8.778,
+      "maxX": 37.106,
+      "minZ": 152.082,
+      "maxZ": 167.965
+    },
+    "rings": [
+      [
+        [
+          8.792,
+          152.082
+        ],
+        [
+          8.778,
+          167.921
+        ],
+        [
+          37.091,
+          167.965
+        ],
+        [
+          37.106,
+          152.11
+        ],
+        [
+          25.524,
+          152.096
+        ],
+        [
+          8.792,
+          152.082
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5027,
+    "side": "west",
+    "frontX": -11.01,
+    "frontZStart": 166.01,
+    "frontZEnd": 192.71,
+    "frontWidth": 26.69,
+    "addressRanges": [
+      "49"
+    ],
+    "municipalNamesUnverified": [
+      "Burlington CityPlace"
+    ],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": -251.347,
+      "maxX": -11.008,
+      "minZ": 144.314,
+      "maxZ": 210.891
+    },
+    "rings": [
+      [
+        [
+          -79.489,
+          169.109
+        ],
+        [
+          -86.075,
+          169.089
+        ],
+        [
+          -86.06,
+          154.923
+        ],
+        [
+          -111.657,
+          154.884
+        ],
+        [
+          -111.648,
+          144.314
+        ],
+        [
+          -119.734,
+          144.318
+        ],
+        [
+          -119.774,
+          154.871
+        ],
+        [
+          -122.74,
+          154.873
+        ],
+        [
+          -122.788,
+          179.389
+        ],
+        [
+          -125.535,
+          179.384
+        ],
+        [
+          -125.498,
+          151.739
+        ],
+        [
+          -160.793,
+          151.38
+        ],
+        [
+          -161.087,
+          179.234
+        ],
+        [
+          -245.689,
+          178.384
+        ],
+        [
+          -245.505,
+          160.44
+        ],
+        [
+          -250.811,
+          160.388
+        ],
+        [
+          -251.347,
+          210.39
+        ],
+        [
+          -224.611,
+          210.891
+        ],
+        [
+          -222.511,
+          208.935
+        ],
+        [
+          -215.598,
+          202.54
+        ],
+        [
+          -129.405,
+          203.433
+        ],
+        [
+          -63.903,
+          204.107
+        ],
+        [
+          -63.75,
+          193.026
+        ],
+        [
+          -56.213,
+          185.794
+        ],
+        [
+          -41.234,
+          185.963
+        ],
+        [
+          -35.74,
+          185.975
+        ],
+        [
+          -35.703,
+          192.685
+        ],
+        [
+          -11.042,
+          192.705
+        ],
+        [
+          -11.008,
+          166.014
+        ],
+        [
+          -62.422,
+          165.945
+        ],
+        [
+          -62.442,
+          175.092
+        ],
+        [
+          -79.487,
+          175.067
+        ],
+        [
+          -79.489,
+          169.109
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5057,
+    "side": "east",
+    "frontX": 8.94,
+    "frontZStart": 169.74,
+    "frontZEnd": 184.06,
+    "frontWidth": 14.32,
+    "addressRanges": [
+      "52-54"
+    ],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": 8.94,
+      "maxX": 47.889,
+      "minZ": 169.742,
+      "maxZ": 184.118
+    },
+    "rings": [
+      [
+        [
+          47.889,
+          169.796
+        ],
+        [
+          47.139,
+          169.8
+        ],
+        [
+          37.712,
+          169.786
+        ],
+        [
+          8.961,
+          169.742
+        ],
+        [
+          8.94,
+          184.064
+        ],
+        [
+          47.867,
+          184.118
+        ],
+        [
+          47.889,
+          169.796
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5064,
+    "side": "east",
+    "frontX": 8.9,
+    "frontZStart": 184.49,
+    "frontZEnd": 198.81,
+    "frontWidth": 14.32,
+    "addressRanges": [
+      "56-58"
+    ],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": 8.903,
+      "maxX": 47.884,
+      "minZ": 184.486,
+      "maxZ": 198.863
+    },
+    "rings": [
+      [
+        [
+          47.884,
+          184.525
+        ],
+        [
+          8.925,
+          184.486
+        ],
+        [
+          8.903,
+          198.808
+        ],
+        [
+          47.862,
+          198.863
+        ],
+        [
+          47.884,
+          184.525
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5083,
+    "side": "west",
+    "frontX": -11.04,
+    "frontZStart": 192.71,
+    "frontZEnd": 205.21,
+    "frontWidth": 12.51,
+    "addressRanges": [
+      "57-59"
+    ],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": -35.703,
+      "maxX": -11.042,
+      "minZ": 192.685,
+      "maxZ": 205.213
+    },
+    "rings": [
+      [
+        [
+          -35.703,
+          192.685
+        ],
+        [
+          -35.697,
+          199.377
+        ],
+        [
+          -33.575,
+          199.392
+        ],
+        [
+          -33.567,
+          200.909
+        ],
+        [
+          -32.974,
+          200.915
+        ],
+        [
+          -32.974,
+          205.184
+        ],
+        [
+          -11.059,
+          205.213
+        ],
+        [
+          -11.042,
+          192.705
+        ],
+        [
+          -35.703,
+          192.685
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5099,
+    "side": "east",
+    "frontX": 19.97,
+    "frontZStart": 202.03,
+    "frontZEnd": 206.11,
+    "frontWidth": 4.08,
+    "addressRanges": [],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": 19.97,
+      "maxX": 28.079,
+      "minZ": 202.026,
+      "maxZ": 206.118
+    },
+    "rings": [
+      [
+        [
+          28.055,
+          206.118
+        ],
+        [
+          28.079,
+          202.038
+        ],
+        [
+          19.994,
+          202.026
+        ],
+        [
+          19.97,
+          206.106
+        ],
+        [
+          28.055,
+          206.118
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5108,
+    "side": "west",
+    "frontX": -11.06,
+    "frontZStart": 205.21,
+    "frontZEnd": 223.49,
+    "frontWidth": 18.28,
+    "addressRanges": [
+      "61-69"
+    ],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": -33.919,
+      "maxX": -11.059,
+      "minZ": 205.182,
+      "maxZ": 223.491
+    },
+    "rings": [
+      [
+        [
+          -32.974,
+          205.184
+        ],
+        [
+          -33.879,
+          205.182
+        ],
+        [
+          -33.919,
+          223.475
+        ],
+        [
+          -31.172,
+          223.466
+        ],
+        [
+          -11.1,
+          223.491
+        ],
+        [
+          -11.059,
+          205.213
+        ],
+        [
+          -32.974,
+          205.184
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5106,
+    "side": "east",
+    "frontX": 9.08,
+    "frontZStart": 206.09,
+    "frontZEnd": 235.11,
+    "frontWidth": 29.02,
+    "addressRanges": [
+      "66-78"
+    ],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": 9.082,
+      "maxX": 28.929,
+      "minZ": 206.088,
+      "maxZ": 238.423
+    },
+    "rings": [
+      [
+        [
+          28.929,
+          206.119
+        ],
+        [
+          28.055,
+          206.118
+        ],
+        [
+          19.97,
+          206.106
+        ],
+        [
+          9.138,
+          206.088
+        ],
+        [
+          9.082,
+          235.108
+        ],
+        [
+          12.615,
+          238.41
+        ],
+        [
+          28.879,
+          238.423
+        ],
+        [
+          28.929,
+          206.119
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5135,
+    "side": "west",
+    "frontX": -11.1,
+    "frontZStart": 223.49,
+    "frontZEnd": 239.96,
+    "frontWidth": 16.46,
+    "addressRanges": [
+      "71-75"
+    ],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": -34.25,
+      "maxX": -11.1,
+      "minZ": 223.466,
+      "maxZ": 239.955
+    },
+    "rings": [
+      [
+        [
+          -31.172,
+          223.466
+        ],
+        [
+          -31.191,
+          231.706
+        ],
+        [
+          -34.25,
+          231.704
+        ],
+        [
+          -34.237,
+          239.929
+        ],
+        [
+          -31.209,
+          239.93
+        ],
+        [
+          -11.136,
+          239.955
+        ],
+        [
+          -11.1,
+          223.491
+        ],
+        [
+          -31.172,
+          223.466
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5177,
+    "side": "west",
+    "frontX": -10.54,
+    "frontZStart": 257.79,
+    "frontZEnd": 294.05,
+    "frontWidth": 36.27,
+    "addressRanges": [
+      "81-93"
+    ],
+    "municipalNamesUnverified": [
+      "Howard Opera House - Bank Street",
+      "Howard Opera House - Church Street",
+      "Howard Opera House - Bank Street"
+    ],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": -60.945,
+      "maxX": -10.536,
+      "minZ": 257.353,
+      "maxZ": 294.054
+    },
+    "rings": [
+      [
+        [
+          -33.113,
+          294.042
+        ],
+        [
+          -10.824,
+          294.054
+        ],
+        [
+          -10.536,
+          257.787
+        ],
+        [
+          -42.462,
+          257.519
+        ],
+        [
+          -46.207,
+          257.477
+        ],
+        [
+          -60.375,
+          257.353
+        ],
+        [
+          -60.553,
+          275.986
+        ],
+        [
+          -46.385,
+          276.109
+        ],
+        [
+          -46.302,
+          266.98
+        ],
+        [
+          -42.558,
+          267.023
+        ],
+        [
+          -42.7,
+          284.671
+        ],
+        [
+          -60.864,
+          284.528
+        ],
+        [
+          -60.945,
+          293.641
+        ],
+        [
+          -38.506,
+          293.815
+        ],
+        [
+          -34.518,
+          294.038
+        ],
+        [
+          -33.113,
+          294.042
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5173,
+    "side": "east",
+    "frontX": 9.71,
+    "frontZStart": 258.25,
+    "frontZEnd": 277.88,
+    "frontWidth": 19.63,
+    "addressRanges": [
+      "80-84"
+    ],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": 9.712,
+      "maxX": 33.366,
+      "minZ": 258.249,
+      "maxZ": 278.109
+    },
+    "rings": [
+      [
+        [
+          32.337,
+          278.109
+        ],
+        [
+          32.401,
+          272.06
+        ],
+        [
+          32.411,
+          270.919
+        ],
+        [
+          20.178,
+          270.803
+        ],
+        [
+          20.18,
+          269.02
+        ],
+        [
+          23.831,
+          269.059
+        ],
+        [
+          23.921,
+          265.732
+        ],
+        [
+          24.358,
+          265.732
+        ],
+        [
+          24.335,
+          269.797
+        ],
+        [
+          33.229,
+          269.87
+        ],
+        [
+          33.366,
+          258.397
+        ],
+        [
+          24.437,
+          258.401
+        ],
+        [
+          21.754,
+          258.366
+        ],
+        [
+          9.926,
+          258.249
+        ],
+        [
+          9.847,
+          265.58
+        ],
+        [
+          9.776,
+          271.832
+        ],
+        [
+          9.712,
+          277.881
+        ],
+        [
+          32.337,
+          278.109
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5211,
+    "side": "east",
+    "frontX": 9.42,
+    "frontZStart": 277.88,
+    "frontZEnd": 293.57,
+    "frontWidth": 15.69,
+    "addressRanges": [
+      "86-88"
+    ],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": 9.423,
+      "maxX": 32.337,
+      "minZ": 277.881,
+      "maxZ": 293.793
+    },
+    "rings": [
+      [
+        [
+          32.337,
+          278.109
+        ],
+        [
+          9.712,
+          277.881
+        ],
+        [
+          9.423,
+          293.57
+        ],
+        [
+          31.922,
+          293.793
+        ],
+        [
+          32.337,
+          278.109
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5232,
+    "side": "east",
+    "frontX": 9.35,
+    "frontZStart": 293.57,
+    "frontZEnd": 299.96,
+    "frontWidth": 6.39,
+    "addressRanges": [],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": 9.346,
+      "maxX": 31.922,
+      "minZ": 293.57,
+      "maxZ": 300.203
+    },
+    "rings": [
+      [
+        [
+          9.423,
+          293.57
+        ],
+        [
+          9.346,
+          299.963
+        ],
+        [
+          31.877,
+          300.203
+        ],
+        [
+          31.922,
+          293.793
+        ],
+        [
+          9.423,
+          293.57
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5234,
+    "side": "west",
+    "frontX": -10.84,
+    "frontZStart": 294.43,
+    "frontZEnd": 300.65,
+    "frontWidth": 6.22,
+    "addressRanges": [],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": -38.593,
+      "maxX": -10.838,
+      "minZ": 293.815,
+      "maxZ": 300.649
+    },
+    "rings": [
+      [
+        [
+          -38.506,
+          293.815
+        ],
+        [
+          -38.593,
+          298.784
+        ],
+        [
+          -33.195,
+          298.855
+        ],
+        [
+          -33.217,
+          300.34
+        ],
+        [
+          -10.939,
+          300.649
+        ],
+        [
+          -10.838,
+          294.429
+        ],
+        [
+          -33.113,
+          294.042
+        ],
+        [
+          -34.518,
+          294.038
+        ],
+        [
+          -38.506,
+          293.815
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5239,
+    "side": "east",
+    "frontX": 9.27,
+    "frontZStart": 299.96,
+    "frontZEnd": 308.2,
+    "frontWidth": 8.24,
+    "addressRanges": [
+      "98-100"
+    ],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": 9.265,
+      "maxX": 50.139,
+      "minZ": 299.963,
+      "maxZ": 308.528
+    },
+    "rings": [
+      [
+        [
+          50.138,
+          300.225
+        ],
+        [
+          41.619,
+          300.134
+        ],
+        [
+          36.127,
+          300.076
+        ],
+        [
+          35.846,
+          300.081
+        ],
+        [
+          31.877,
+          300.203
+        ],
+        [
+          9.346,
+          299.963
+        ],
+        [
+          9.265,
+          308.2
+        ],
+        [
+          21.373,
+          308.327
+        ],
+        [
+          31.422,
+          308.427
+        ],
+        [
+          36.04,
+          308.469
+        ],
+        [
+          41.532,
+          308.528
+        ],
+        [
+          50.061,
+          308.369
+        ],
+        [
+          50.139,
+          301.054
+        ],
+        [
+          50.138,
+          300.225
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5244,
+    "side": "west",
+    "frontX": -10.44,
+    "frontZStart": 301.51,
+    "frontZEnd": 307.9,
+    "frontWidth": 6.39,
+    "addressRanges": [],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": -24.468,
+      "maxX": -10.44,
+      "minZ": 301.44,
+      "maxZ": 307.905
+    },
+    "rings": [
+      [
+        [
+          -10.44,
+          301.511
+        ],
+        [
+          -24.454,
+          301.44
+        ],
+        [
+          -24.468,
+          307.835
+        ],
+        [
+          -10.485,
+          307.905
+        ],
+        [
+          -10.44,
+          301.511
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5248,
+    "side": "east",
+    "frontX": 9.12,
+    "frontZStart": 308.2,
+    "frontZEnd": 315.51,
+    "frontWidth": 7.31,
+    "addressRanges": [
+      "102"
+    ],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": 9.124,
+      "maxX": 31.422,
+      "minZ": 308.2,
+      "maxZ": 315.742
+    },
+    "rings": [
+      [
+        [
+          9.265,
+          308.2
+        ],
+        [
+          9.124,
+          315.513
+        ],
+        [
+          31.343,
+          315.742
+        ],
+        [
+          31.422,
+          308.427
+        ],
+        [
+          21.373,
+          308.327
+        ],
+        [
+          9.265,
+          308.2
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5252,
+    "side": "west",
+    "frontX": -10.26,
+    "frontZStart": 308.63,
+    "frontZEnd": 321.44,
+    "frontWidth": 12.81,
+    "addressRanges": [
+      "99-101"
+    ],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": -27.21,
+      "maxX": -10.262,
+      "minZ": 308.548,
+      "maxZ": 321.437
+    },
+    "rings": [
+      [
+        [
+          -17.253,
+          308.597
+        ],
+        [
+          -27.21,
+          308.548
+        ],
+        [
+          -27.075,
+          318.576
+        ],
+        [
+          -27.076,
+          319.468
+        ],
+        [
+          -27.051,
+          321.361
+        ],
+        [
+          -17.313,
+          321.402
+        ],
+        [
+          -10.321,
+          321.437
+        ],
+        [
+          -10.262,
+          308.632
+        ],
+        [
+          -17.253,
+          308.597
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5261,
+    "side": "east",
+    "frontX": 9.42,
+    "frontZStart": 317.12,
+    "frontZEnd": 328.1,
+    "frontWidth": 10.98,
+    "addressRanges": [
+      "104-106"
+    ],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": 9.416,
+      "maxX": 27.112,
+      "minZ": 317.121,
+      "maxZ": 328.173
+    },
+    "rings": [
+      [
+        [
+          9.416,
+          328.096
+        ],
+        [
+          27.051,
+          328.173
+        ],
+        [
+          27.112,
+          319.638
+        ],
+        [
+          26.799,
+          319.642
+        ],
+        [
+          26.826,
+          317.204
+        ],
+        [
+          9.471,
+          317.121
+        ],
+        [
+          9.416,
+          328.096
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5263,
+    "side": "west",
+    "frontX": -10.34,
+    "frontZStart": 321.94,
+    "frontZEnd": 331.52,
+    "frontWidth": 9.58,
+    "addressRanges": [
+      "103"
+    ],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": -25.736,
+      "maxX": -10.34,
+      "minZ": 321.864,
+      "maxZ": 331.519
+    },
+    "rings": [
+      [
+        [
+          -10.34,
+          321.936
+        ],
+        [
+          -12.306,
+          321.928
+        ],
+        [
+          -21.42,
+          321.894
+        ],
+        [
+          -25.665,
+          321.864
+        ],
+        [
+          -25.736,
+          329.821
+        ],
+        [
+          -25.732,
+          331.447
+        ],
+        [
+          -21.456,
+          331.462
+        ],
+        [
+          -12.373,
+          331.51
+        ],
+        [
+          -10.407,
+          331.519
+        ],
+        [
+          -10.34,
+          321.936
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5268,
+    "side": "east",
+    "frontX": 9.22,
+    "frontZStart": 328.1,
+    "frontZEnd": 340.29,
+    "frontWidth": 12.19,
+    "addressRanges": [
+      "108-110"
+    ],
+    "municipalNamesUnverified": [
+      "Discovery Channel Store"
+    ],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": 9.222,
+      "maxX": 29.361,
+      "minZ": 328.096,
+      "maxZ": 340.378
+    },
+    "rings": [
+      [
+        [
+          9.416,
+          328.096
+        ],
+        [
+          9.222,
+          340.285
+        ],
+        [
+          28.98,
+          340.378
+        ],
+        [
+          29.292,
+          340.373
+        ],
+        [
+          29.361,
+          328.179
+        ],
+        [
+          27.051,
+          328.173
+        ],
+        [
+          9.416,
+          328.096
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5278,
+    "side": "west",
+    "frontX": -10.1,
+    "frontZStart": 332.64,
+    "frontZEnd": 339.96,
+    "frontWidth": 7.32,
+    "addressRanges": [
+      "107"
+    ],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": -25.41,
+      "maxX": -10.104,
+      "minZ": 332.448,
+      "maxZ": 339.956
+    },
+    "rings": [
+      [
+        [
+          -21.369,
+          332.497
+        ],
+        [
+          -25.3,
+          332.448
+        ],
+        [
+          -25.373,
+          337.011
+        ],
+        [
+          -25.41,
+          339.762
+        ],
+        [
+          -10.183,
+          339.956
+        ],
+        [
+          -10.104,
+          332.64
+        ],
+        [
+          -21.369,
+          332.497
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5287,
+    "side": "east",
+    "frontX": 9.18,
+    "frontZStart": 340.29,
+    "frontZEnd": 347.6,
+    "frontWidth": 7.32,
+    "addressRanges": [
+      "112"
+    ],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": 9.175,
+      "maxX": 28.98,
+      "minZ": 340.285,
+      "maxZ": 347.757
+    },
+    "rings": [
+      [
+        [
+          9.222,
+          340.285
+        ],
+        [
+          9.175,
+          347.602
+        ],
+        [
+          28.961,
+          347.757
+        ],
+        [
+          28.98,
+          340.378
+        ],
+        [
+          9.222,
+          340.285
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5290,
+    "side": "west",
+    "frontX": -9.98,
+    "frontZStart": 341.21,
+    "frontZEnd": 349.44,
+    "frontWidth": 8.22,
+    "addressRanges": [
+      "111"
+    ],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": -25.229,
+      "maxX": -9.979,
+      "minZ": 341.147,
+      "maxZ": 349.438
+    },
+    "rings": [
+      [
+        [
+          -9.979,
+          341.214
+        ],
+        [
+          -25.18,
+          341.147
+        ],
+        [
+          -25.229,
+          349.37
+        ],
+        [
+          -9.997,
+          349.438
+        ],
+        [
+          -9.979,
+          341.214
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5297,
+    "side": "east",
+    "frontX": 9.1,
+    "frontZStart": 347.6,
+    "frontZEnd": 361.69,
+    "frontWidth": 14.09,
+    "addressRanges": [
+      "116"
+    ],
+    "municipalNamesUnverified": [
+      "Howard National Bank"
+    ],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": 9.1,
+      "maxX": 29.481,
+      "minZ": 347.602,
+      "maxZ": 361.787
+    },
+    "rings": [
+      [
+        [
+          9.175,
+          347.602
+        ],
+        [
+          9.1,
+          361.687
+        ],
+        [
+          29.481,
+          361.787
+        ],
+        [
+          28.961,
+          347.757
+        ],
+        [
+          9.175,
+          347.602
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5302,
+    "side": "west",
+    "frontX": -17.59,
+    "frontZStart": 349.77,
+    "frontZEnd": 361.95,
+    "frontWidth": 12.18,
+    "addressRanges": [],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": -25.435,
+      "maxX": -17.595,
+      "minZ": 349.723,
+      "maxZ": 361.951
+    },
+    "rings": [
+      [
+        [
+          -17.595,
+          349.772
+        ],
+        [
+          -25.398,
+          349.723
+        ],
+        [
+          -25.425,
+          357.353
+        ],
+        [
+          -25.435,
+          361.918
+        ],
+        [
+          -17.663,
+          361.951
+        ],
+        [
+          -17.81,
+          357.395
+        ],
+        [
+          -17.595,
+          349.772
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5301,
+    "side": "west",
+    "frontX": -9.98,
+    "frontZStart": 349.8,
+    "frontZEnd": 361.99,
+    "frontWidth": 12.19,
+    "addressRanges": [
+      "113-115"
+    ],
+    "municipalNamesUnverified": [
+      "Leunig's Bistro"
+    ],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": -17.81,
+      "maxX": -9.979,
+      "minZ": 349.772,
+      "maxZ": 361.993
+    },
+    "rings": [
+      [
+        [
+          -17.663,
+          361.951
+        ],
+        [
+          -10.048,
+          361.993
+        ],
+        [
+          -10.038,
+          357.427
+        ],
+        [
+          -9.979,
+          349.798
+        ],
+        [
+          -17.595,
+          349.772
+        ],
+        [
+          -17.81,
+          357.395
+        ],
+        [
+          -17.663,
+          361.951
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5331,
+    "side": "east",
+    "frontX": 8.22,
+    "frontZStart": 381.69,
+    "frontZEnd": 404.53,
+    "frontWidth": 22.85,
+    "addressRanges": [
+      "118-126"
+    ],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": 8.216,
+      "maxX": 26.027,
+      "minZ": 381.604,
+      "maxZ": 404.533
+    },
+    "rings": [
+      [
+        [
+          21.32,
+          381.896
+        ],
+        [
+          18.885,
+          381.902
+        ],
+        [
+          18.864,
+          381.604
+        ],
+        [
+          8.216,
+          381.686
+        ],
+        [
+          8.352,
+          400.267
+        ],
+        [
+          8.664,
+          400.279
+        ],
+        [
+          8.697,
+          404.533
+        ],
+        [
+          19.032,
+          404.455
+        ],
+        [
+          26.027,
+          404.412
+        ],
+        [
+          25.995,
+          400.142
+        ],
+        [
+          21.436,
+          400.18
+        ],
+        [
+          21.32,
+          381.896
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5332,
+    "side": "west",
+    "frontX": -11.4,
+    "frontZStart": 382.12,
+    "frontZEnd": 391.06,
+    "frontWidth": 8.94,
+    "addressRanges": [
+      "117"
+    ],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": -29.329,
+      "maxX": -11.404,
+      "minZ": 381.935,
+      "maxZ": 391.055
+    },
+    "rings": [
+      [
+        [
+          -11.51,
+          391.055
+        ],
+        [
+          -11.404,
+          382.115
+        ],
+        [
+          -29.254,
+          381.935
+        ],
+        [
+          -29.329,
+          390.877
+        ],
+        [
+          -11.51,
+          391.055
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5333,
+    "side": "west",
+    "frontX": -11.51,
+    "frontZStart": 391.06,
+    "frontZEnd": 416.1,
+    "frontWidth": 25.04,
+    "addressRanges": [
+      "123-131"
+    ],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": -40.1,
+      "maxX": -11.51,
+      "minZ": 381.836,
+      "maxZ": 416.096
+    },
+    "rings": [
+      [
+        [
+          -29.254,
+          381.935
+        ],
+        [
+          -39.739,
+          381.836
+        ],
+        [
+          -39.814,
+          390.777
+        ],
+        [
+          -39.913,
+          400.359
+        ],
+        [
+          -40.1,
+          415.801
+        ],
+        [
+          -11.765,
+          416.096
+        ],
+        [
+          -11.609,
+          400.637
+        ],
+        [
+          -11.51,
+          391.055
+        ],
+        [
+          -29.329,
+          390.877
+        ],
+        [
+          -29.254,
+          381.935
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5365,
+    "side": "east",
+    "frontX": 9.25,
+    "frontZStart": 405.27,
+    "frontZEnd": 412.59,
+    "frontWidth": 7.32,
+    "addressRanges": [
+      "128-130"
+    ],
+    "municipalNamesUnverified": [
+      "Global Pathways and Maven"
+    ],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": 9.247,
+      "maxX": 27.524,
+      "minZ": 405.273,
+      "maxZ": 412.613
+    },
+    "rings": [
+      [
+        [
+          9.247,
+          412.59
+        ],
+        [
+          27.508,
+          412.613
+        ],
+        [
+          27.524,
+          405.295
+        ],
+        [
+          9.263,
+          405.273
+        ],
+        [
+          9.247,
+          412.59
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5369,
+    "side": "east",
+    "frontX": 9.23,
+    "frontZStart": 412.59,
+    "frontZEnd": 420.81,
+    "frontWidth": 8.23,
+    "addressRanges": [
+      "132-134"
+    ],
+    "municipalNamesUnverified": [
+      "Akes Place"
+    ],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": 9.229,
+      "maxX": 27.508,
+      "minZ": 412.59,
+      "maxZ": 420.837
+    },
+    "rings": [
+      [
+        [
+          9.247,
+          412.59
+        ],
+        [
+          9.229,
+          420.815
+        ],
+        [
+          27.49,
+          420.837
+        ],
+        [
+          27.508,
+          412.613
+        ],
+        [
+          9.247,
+          412.59
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5379,
+    "side": "west",
+    "frontX": -9.87,
+    "frontZStart": 418.9,
+    "frontZEnd": 429.64,
+    "frontWidth": 10.74,
+    "addressRanges": [],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": -39.437,
+      "maxX": -9.869,
+      "minZ": 418.613,
+      "maxZ": 429.64
+    },
+    "rings": [
+      [
+        [
+          -9.869,
+          418.901
+        ],
+        [
+          -39.328,
+          418.613
+        ],
+        [
+          -39.437,
+          429.336
+        ],
+        [
+          -9.979,
+          429.64
+        ],
+        [
+          -9.869,
+          418.901
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5392,
+    "side": "east",
+    "frontX": 8.37,
+    "frontZStart": 427.3,
+    "frontZEnd": 443.46,
+    "frontWidth": 16.16,
+    "addressRanges": [],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": 8.374,
+      "maxX": 37.256,
+      "minZ": 427.3,
+      "maxZ": 443.96
+    },
+    "rings": [
+      [
+        [
+          22.653,
+          443.96
+        ],
+        [
+          22.719,
+          441.288
+        ],
+        [
+          20.286,
+          441.231
+        ],
+        [
+          20.37,
+          436.356
+        ],
+        [
+          37.091,
+          436.666
+        ],
+        [
+          37.256,
+          427.837
+        ],
+        [
+          8.681,
+          427.3
+        ],
+        [
+          8.374,
+          443.457
+        ],
+        [
+          22.653,
+          443.96
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5398,
+    "side": "west",
+    "frontX": -17.85,
+    "frontZStart": 434.87,
+    "frontZEnd": 485.77,
+    "frontWidth": 50.89,
+    "addressRanges": [],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": -38.896,
+      "maxX": -17.849,
+      "minZ": 434.846,
+      "maxZ": 485.768
+    },
+    "rings": [
+      [
+        [
+          -17.849,
+          434.873
+        ],
+        [
+          -38.825,
+          434.846
+        ],
+        [
+          -38.896,
+          485.741
+        ],
+        [
+          -17.92,
+          485.768
+        ],
+        [
+          -17.849,
+          434.873
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5408,
+    "side": "east",
+    "frontX": 8.24,
+    "frontZStart": 443.72,
+    "frontZEnd": 452.27,
+    "frontWidth": 8.55,
+    "addressRanges": [
+      "142-144",
+      "144"
+    ],
+    "municipalNamesUnverified": [
+      "Mr. Crepe"
+    ],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": 8.241,
+      "maxX": 36.068,
+      "minZ": 443.723,
+      "maxZ": 452.729
+    },
+    "rings": [
+      [
+        [
+          36.068,
+          444.197
+        ],
+        [
+          22.653,
+          443.96
+        ],
+        [
+          8.396,
+          443.723
+        ],
+        [
+          8.241,
+          452.271
+        ],
+        [
+          35.914,
+          452.729
+        ],
+        [
+          36.068,
+          444.197
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5421,
+    "side": "east",
+    "frontX": 8.44,
+    "frontZStart": 453.34,
+    "frontZEnd": 462.19,
+    "frontWidth": 8.85,
+    "addressRanges": [
+      "146-148"
+    ],
+    "municipalNamesUnverified": [
+      "Laliguras Indian Nepali Restaurant"
+    ],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": 8.442,
+      "maxX": 31.27,
+      "minZ": 453.342,
+      "maxZ": 462.224
+    },
+    "rings": [
+      [
+        [
+          8.452,
+          453.342
+        ],
+        [
+          8.442,
+          462.192
+        ],
+        [
+          31.26,
+          462.224
+        ],
+        [
+          31.27,
+          453.374
+        ],
+        [
+          8.452,
+          453.342
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5428,
+    "side": "east",
+    "frontX": 6.37,
+    "frontZStart": 464.35,
+    "frontZEnd": 477.77,
+    "frontWidth": 13.42,
+    "addressRanges": [
+      "150"
+    ],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": 6.365,
+      "maxX": 27.486,
+      "minZ": 464.178,
+      "maxZ": 477.774
+    },
+    "rings": [
+      [
+        [
+          6.502,
+          477.774
+        ],
+        [
+          27.486,
+          477.598
+        ],
+        [
+          27.381,
+          464.178
+        ],
+        [
+          6.365,
+          464.353
+        ],
+        [
+          6.502,
+          477.774
+        ]
+      ]
+    ]
+  },
+  {
+    "footprintId": 5438,
+    "side": "east",
+    "frontX": 6.5,
+    "frontZStart": 477.77,
+    "frontZEnd": 484.78,
+    "frontWidth": 7.01,
+    "addressRanges": [],
+    "municipalNamesUnverified": [],
+    "height": null,
+    "heightEvidence": "Not supplied by footprint GIS. Determine from video/reference.",
+    "bounds": {
+      "minX": 6.502,
+      "maxX": 27.543,
+      "minZ": 477.598,
+      "maxZ": 484.781
+    },
+    "rings": [
+      [
+        [
+          6.502,
+          477.774
+        ],
+        [
+          6.559,
+          484.781
+        ],
+        [
+          27.543,
+          484.606
+        ],
+        [
+          27.486,
+          477.598
+        ],
+        [
+          6.502,
+          477.774
+        ]
+      ]
+    ]
+  }
+]
