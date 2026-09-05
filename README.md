@@ -1,5 +1,9 @@
 # Church Street: Last Light
 
+**Public game:** https://play.btownbrief.com/church-street-zombies/
+
+Published on BTown Arcade by request. The arcade catalog also supplies the Hub directory and network search.
+
 **First playable version:** a local crossover of zombie survival, Church Street Skate, Church St Runners, and Street Yeet. The accepted direction and source references are in `docs/CROSSOVER-PLAN.md`.
 
 A playable first-person zombie survival game with a skateboarding escape route, set in Burlington's Church Street Marketplace. Ten waves, two guns, upgrades, pickups, YEET attacks, explosives, barricades, five compact skate lines, two halfpipes, and optional runner portals. Desktop and touch controls. No accounts, servers, downloads from CDNs, or online leaderboard.
@@ -21,7 +25,7 @@ npm run build
 npm run preview
 ```
 
-Only run one server on port 5186 at a time. Press Control-C in the server terminal to stop it. `dist/` can be served by any ordinary static host. This version has not been publicly deployed.
+The production preview opens at `http://localhost:5186/church-street-zombies/`. Only run one server on port 5186 at a time. Press Control-C in the server terminal to stop it. `dist/` can be served by any ordinary static host. GitHub Actions tests and builds `dist/`, then publishes it to GitHub Pages on every push to `main`.
 
 ## Play on your phone
 
@@ -93,11 +97,11 @@ The original skate reference is [btownbrief/church-street-skate](https://github.
 - `src/game/runner.js`, `runner-scene.js`: runner simulation, obstacles and portal scene.
 - `scripts/build-rider.py`, `assets/source/skater.blend`: reproducible Blender rider source; the runtime GLB is in `public/assets/`.
 - `src/world.js` and original source modules: preserved approved environment.
-- `tests/`: 33 tests covering navigation, hitscan, combat, skating, runner controls, obstacle fairness and rewards.
+- `tests/`: 34 tests covering navigation, hitscan, combat, skating, runner controls, obstacle fairness and rewards.
 - `src/game/qa.js`: development-only browser test panel, available with `?qa=1`, removed from production builds. QA best scores use a separate storage key.
 
 ## Verification
 
 Run `npm test` and `npm run build`. See `docs/TESTING.md` for browser checks and limitations. Tests intentionally include meaningful navigation and skate behavior, not only successful compilation.
 
-The build and 33 automated tests pass. Real-browser fixtures exercised combat, skating, portals and mobile gestures. A full human ten-minute playtest, physical phone performance and native pointer capture remain unverified. A continuous aiming bot survived five waves before dying in wave six; a separate equipped final-wave test survived all 105 enemies. These are diagnostic results, not proof of human difficulty or AAA production quality. The final live browser recheck was unavailable because the Mac was locked.
+The build and 34 automated tests pass. Real-browser fixtures exercised combat, skating, portals and mobile gestures. A full human ten-minute playtest, physical phone performance and native pointer capture remain unverified. A continuous aiming bot survived five waves before dying in wave six; a separate equipped final-wave test survived all 105 enemies. These are diagnostic results, not proof of human difficulty or AAA production quality. The initial handoff browser recheck was unavailable while the Mac was locked; the subsequent publishing pass verified the production subfolder build in the browser.

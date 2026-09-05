@@ -223,7 +223,8 @@ function drawRadar(){const c=$('#radar').getContext('2d');c.clearRect(0,0,150,15
 function graphics(){if(!app)return;const low=lowGraphics||input?.touch;app.graphicsDevice.maxPixelRatio=low?1:Math.min(devicePixelRatio||1,1.5);sun.light.castShadows=!low;app.resizeCanvas();}
 async function init(){
  try{
- app=new pc.Application(canvas,{graphicsDeviceOptions:{antialias:true,alpha:false,powerPreference:'high-performance'}});app.setCanvasFillMode(pc.FILLMODE_FILL_WINDOW);app.setCanvasResolution(pc.RESOLUTION_AUTO);app.graphicsDevice.maxPixelRatio=Math.min(devicePixelRatio||1,1.5);
+ app=new pc.Application(canvas,{graphicsDeviceOptions:{antialias:true,alpha:false,powerPreference:'high-performance'}});// Prefix root-relative runtime assets without editing the preserved world modules.
+ app.assets.prefix=import.meta.env.BASE_URL.replace(/\/$/,'');app.setCanvasFillMode(pc.FILLMODE_FILL_WINDOW);app.setCanvasResolution(pc.RESOLUTION_AUTO);app.graphicsDevice.maxPixelRatio=Math.min(devicePixelRatio||1,1.5);
  app.scene.ambientLight=new pc.Color(.52,.59,.57);app.scene.exposure=1.05;app.scene.fog.type='linear';app.scene.fog.color=new pc.Color(.38,.49,.49);app.scene.fog.start=95;app.scene.fog.end=390;
  sun=new pc.Entity('Last light over Burlington');sun.addComponent('light',{type:'directional',color:new pc.Color(1,.81,.57),intensity:1.5,castShadows:true,shadowDistance:80,shadowResolution:1024,shadowBias:.16,normalOffsetBias:.06,numCascades:2});sun.setEulerAngles(24,-62,0);app.root.addChild(sun);
  const fill=new pc.Entity('Evening sky');fill.addComponent('light',{type:'directional',color:new pc.Color(.54,.75,.86),intensity:.45});fill.setEulerAngles(65,120,0);app.root.addChild(fill);
