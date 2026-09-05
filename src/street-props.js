@@ -40,7 +40,7 @@ export function buildStreetProps(app, geo = {}) {
   const granite = material('Rough granite boulders', '7b7871');
   const graniteLight = material('Granite light faces', '918b7d');
   const lampGlass = material('Warm lamp diffuser', 'f2e0b4', .42, .5);
-  const bulb = material('Small warm winter tree bulbs', 'f7d591', .3, 2);
+  const bulb = material('Small warm winter tree bulbs', 'f6c46e', .3, 2.6);
   const rust = material('Drain grate iron', '625747');
   const recycleBlue = material('Observed blue recycling cart lids', '2872a8');
 
@@ -94,7 +94,7 @@ export function buildStreetProps(app, geo = {}) {
   const cylinder = (mat,x,y,z,r,h,top=r,sides=12) => branch(mat,[x,y-h/2,z],[x,y+h/2,z],r,top,sides,true);
   function tinyBulb(x,y,z) {
     // Low-sided octahedra retain pinpoints without a light per bulb.
-    const r=.022, t=[x,y+r*1.5,z], b=[x,y-r*1.5,z];
+    const r=.03, t=[x,y+r*1.5,z], b=[x,y-r*1.5,z];
     const ring=[[x-r,y,z],[x,y,z+r],[x+r,y,z],[x,y,z-r]];
     for(let i=0;i<4;i++){triangle(bulb,t,ring[i],ring[(i+1)%4]);triangle(bulb,b,ring[(i+1)%4],ring[i]);}
   }
@@ -129,8 +129,9 @@ export function buildStreetProps(app, geo = {}) {
       const start=[fork[0],fork[1]+random()*.6,fork[2]], len=(height-fork[1])*.52;
       split(start,[Math.cos(a)*h,up,Math.sin(a)*h],len,radius*(.45+random()*.15),4);
       // Lit main limbs are plainly visible in walk0160/0260 and aerial003.
-      if(profile.lit!==false) for(let j=1;j<=13;j++) {
-        const t=j/14, turn=j*2.2, r=radius*.46;
+      // Walk 1:40 / 4:20: limbs are wrapped densely, not dotted every half metre.
+      if(profile.lit!==false) for(let j=1;j<=26;j++) {
+        const t=j/27, turn=j*2.2, r=radius*.46;
         tinyBulb(start[0]+Math.cos(a)*h*len*t+Math.cos(turn)*r,start[1]+up*len*t+Math.sin(turn)*r,start[2]+Math.sin(a)*h*len*t);
       }
     }
@@ -144,8 +145,8 @@ export function buildStreetProps(app, geo = {}) {
       for(let k=0;k<10;k++){const a=k*Math.PI*2/10;branch(iron,[x+.38*Math.cos(a),.08,z+.38*Math.sin(a)],[x+.31*Math.cos(a),1.8,z+.31*Math.sin(a)],.013,.013,5);}
       for(const y of [.13,.8,1.72]) {const points=[];for(let k=0;k<=16;k++){const a=k*Math.PI*2/16;points.push([x+.35*Math.cos(a),y,z+.35*Math.sin(a)]);}pipe(iron,points,.017,5);}
     }
-    for(let k=0;k<(profile.lit===false?0:60);k++) {
-      const y=.28+k*.067,a=k*.77,r=radius+.016;
+    for(let k=0;k<(profile.lit===false?0:110);k++) {
+      const y=.28+k*.037,a=k*.77,r=radius+.018;
       tinyBulb(x+Math.cos(a)*r,y,z+Math.sin(a)*r);
     }
     obstacles.push({x,z,r:radius+.12});
@@ -162,10 +163,13 @@ export function buildStreetProps(app, geo = {}) {
   ];
   const treeRecords=estimatedTrees.filter(([x,z])=>!gisTrees.some(t=>Math.hypot(x-t.position[0],z-t.position[1])<3)).map(position=>({position,source:'footage estimate'}));
   treeRecords.push(...gisTrees.map(t=>({...t,source:'municipal tree-site point'})));
+  // Walk 11:30: mature unlit maples stand on the meeting-house lawn either side of the central path.
+  for(const position of [[-13,-19],[12.5,-23],[-24,-38],[17,-47],[-10,-66],[23,-30],[-30,-58]])treeRecords.push({position,source:'walk 11:30 lawn estimate',lawn:true});
   treeRecords.forEach((t,i)=>{
     const [x,z]=t.position;
     const profile={};
     if(x<-10){Object.assign(profile,{setback:true,lit:false,height:9,radius:.23});}
+    if(t.lawn){Object.assign(profile,{setback:true,lit:false,height:13+(i%3),radius:.34,spread:1.25,fork:3.4});}
     // Mature spreading specimens visibly bracket the boulders and bank.
     if(x>0&&z>=275&&z<=299)Object.assign(profile,{height:10.4,radius:.23,spread:1.2});
     if(x>0&&z===358)Object.assign(profile,{height:12,radius:.36,spread:1.15,fork:2.9});
