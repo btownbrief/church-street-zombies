@@ -1,6 +1,6 @@
 {
   "source": "/Users/stephendavis/Projects/church-street-world",
-  "sourceCommit": "af8f40284ee4aee69d711ad14f71b72db8fd4c4a",
+  "sourceCommit": "69088bdb895e2abf131734495d0818f80fbbe994",
   "files": [
     {
       "path": "src/terrain.js",
@@ -9,12 +9,12 @@
     },
     {
       "path": "src/world.js",
-      "sha256": "27945fe63a81bf0e9e6dfe76a9ad3b37e6d7ecbecd2357f442a82c7fb126f24f",
+      "sha256": "9a6d34f98251d9398e8e653c8fc31229018d24f07f92ead7721851110b696131",
       "matchesSource": true
     },
     {
       "path": "src/south-landmarks.js",
-      "sha256": "4df7cd1472f1d9e5b905fd959fa16a96aea5a7213365b7091de689628fe4ef2c",
+      "sha256": "7a9a054ec6af939f2db74facec4b831cb1e32f25dc01a030c96b44b24e4609ae",
       "matchesSource": true
     },
     {
@@ -39,12 +39,12 @@
     },
     {
       "path": "src/street-props.js",
-      "sha256": "2636e97931d9335a5f4070cb849056ec096fb47100969a708769e4692fb68ec1",
+      "sha256": "1e0f1126cb1e72cb3a1fe35371455d2d8fb96a77cfa44a7b8400519299e3835c",
       "matchesSource": true
     },
     {
       "path": "src/architecture.js",
-      "sha256": "3a0769dbd5ec4e7e86df78c771a6d9933b91afea151d6ff8df6b7a04e6130f95",
+      "sha256": "5b121f3bccf1c85f7f3363f536a273ddc2c92473abe676ec40fb2075de18cd86",
       "matchesSource": true
     },
     {

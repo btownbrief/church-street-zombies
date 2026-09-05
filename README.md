@@ -43,7 +43,7 @@ That is the Mac's Wi-Fi address at handoff; it can change. The Vite terminal pri
 | Walk | WASD / arrows | Left thumb stick |
 | Look | Mouse | Drag right side |
 | Fire | Hold left mouse | Hold FIRE; drag that button to aim too |
-| Sprint | Shift + forward | Push stick fully forward |
+| Sprint | Shift + forward | Push the stick most of the way forward (badge lights up) |
 | Reload | R | RELOAD |
 | YEET zombie / red barrel | Hold/release Q | Hold/release YEET; drag to aim |
 | Grenade | G | GRENADE |
@@ -53,7 +53,9 @@ That is the Mac's Wi-Fi address at handoff; it can change. The Vite terminal pri
 | Pause | Esc / P | Pause button |
 | Sound | M | SOUND button |
 
-While skating, the camera moves behind the rider so you can see the board and tricks. W pushes, S brakes (then slowly reverses), and A/D carves; the left stick does the same. Hold/release Space or OLLIE to charge/pop. **J / K / L** performs kickflip / heelflip / shove-it; mobile **FLIP** and **SHOVE** auto-pop. Aim an ollie at a silver rail and descend onto it to grind automatically. Five larger two-way banks launch you when crossed with speed. Two curved halfpipes let you carry momentum up a transition, pop above the coping, and return fakie. Air spins preserve your direction of travel; finish the rotation before landing to avoid bailing. The new Blender-built rider has a sideways stance, fitted clothing, animated pushing/crouching and no hat. Hop off after landing to use your gun. Shooting while riding is intentionally excluded from this first version.
+While skating, the camera sits behind your direction of travel, pulls back and widens as you speed up, and follows big airs softly, the same follow camera as Church Street Skate. W pushes in impulses (each push kicks harder from a standstill), S brakes and then creeps into fakie, and A/D carves; the left stick does the same. Hold/release Space or OLLIE to charge/pop; a full charge from speed clears nearly four metres. **J / K / L** performs kickflip / heelflip / shove-it; mobile **FLIP** and **SHOVE** auto-pop. Hold A/D in the air to spin (spins ramp up rather than snap), and tap **S** in the air for a whole-body backflip worth 420. Aim an ollie at a silver rail and descend onto it to grind automatically. Five larger two-way banks launch you when crossed with speed. Two curved halfpipes, closed at the back with plywood walls and framing, let you carry momentum up a transition, pop well above the coping, and return fakie. A landing assist finishes a nearly complete rotation in the last metre and a half; landing sideways or mid-flip is still a slam. The new Blender-built rider has a sideways stance, fitted clothing, animated pushing/crouching and no hat. Hop off after landing to use your gun. Shooting while riding is intentionally excluded from this first version.
+
+On touch, look is tuned like a mobile shooter: a quick swipe turns most of the way around, the reticle slows while it passes over a zombie, and shots bend slightly toward a target near the crosshair. YEET: a tap already throws hard, holding sweeps the meter to the peak and back, and a launch plays a beat of slow motion; thrown bodies score by distance and by how many zombies they bowl through.
 
 If mouse capture is unsupported, the game falls back to dragging to aim while holding the mouse button to fire. The Codex in-app browser used this fallback; Chrome's native mouse capture was not assumed from that result.
 

@@ -47,3 +47,13 @@ Final delivery audit passed: all 16 approved environment files match the manifes
 Published game: https://play.btownbrief.com/church-street-zombies/
 Source: https://github.com/btownbrief/church-street-zombies
 Catalog commit: btownbrief/btownbrief.github.io@694cff5. No Hub source edit is necessary: its documented catalog merge supplies discovery. The Arcade now skips leaderboard requests for games explicitly marked `leaderboard: false`.
+
+## September 5 — feel pass (skate, shooter, YEET, touch HUD)
+
+- `npm test`: **37 passing**. New cases cover impulse pushes reaching the street cap, speed-scaled pop, backflip start/score/bail timing, tap-strength YEET, and halfpipe air above the coping with spin room.
+- `npm run build`: passes.
+- Headless PlayCanvas checks via the `?qa=1` panel: skate course (6), horde equipment and YEET (17), general integration incl. all ten waves (29) all PASS with no console errors.
+- Phone screenshots (iPhone 13 landscape 750×342 and portrait 390×664) inspected after the touch HUD rebuild: top status band, clear centre, equipment as three round buttons, weapon cluster bottom-right, no overlaps. Halfpipe end wall verified solid from the street.
+- Real Chrome on the Mac: skating at 50 km/h with the ported follow camera, no console errors.
+- Not verified: a physical phone in hand (sticky aim, swipe gain, sprint threshold are tuned by reasoning and emulation, not thumbs), and human balance of the new YEET distance bonus.
+- Same day: the four world modules touched by the church-street-world visual pass (commit 69088bd: crosswalk orientation, paving bands, firehouse banners, procedural sky, context-building windows, paving medallion) were copied in byte-for-byte and the manifest re-pinned to that commit. Tests, build, headless integration run and phone screenshots re-checked with no errors.
