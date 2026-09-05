@@ -28,4 +28,4 @@ Optional portals open between waves. Pause/preserve the survival session while r
 4. Polish desktop and mode-specific mobile controls, sounds, start/end/restart, progression and first-ten-minute pacing.
 5. Verify browser play, source preservation, production build and tests; record limitations honestly. Save Git history and leave a local preview with simple launch instructions. Stop at a finished first playable.
 
-Status: combat integration advanced; remaining gates are not complete. Passing narrow tests does not prove the entire crossover finished.
+Status: all three modes and combat YEET are implemented for the first playable. The course uses five rails, five two-way banks and two curved halfpipes; separate quarter pipes were folded into the halfpipe transitions. Browser mechanics checks, touch gestures, build and source-preservation checks are recorded in TESTING.md. Human ten-minute pacing and physical-device performance remain unverified; passing fixtures is not a claim of those results.

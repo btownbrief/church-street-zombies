@@ -8,8 +8,8 @@ export function createCombatKit(app,world,nav,hooks){
  const wood=mat('796249'),steel=mat('394b4b'),red=mat('a33d2c'),stripe=mat('ebbd58'),glow=mat('ffd27d',2),smoke=mat('595a52'),acid=mat('a7e76a',2);
  function part(root,type,p,s,m){const e=new pc.Entity('Equipment detail');e.addComponent('render',{type,material:m,castShadows:false});e.setLocalPosition(...p);e.setLocalScale(...s);root.addChild(e);return e;}
  function model(kind){const root=new pc.Entity(kind);app.root.addChild(root);if(kind==='barricade'){for(const x of [-.82,.82]){part(root,'box',[x,.48,0],[.16,.96,.2],steel);for(const z of [-.3,.3])part(root,'box',[x,.05,z],[.32,.10,.33],steel);}for(const y of [.4,.72,1.04]){part(root,'box',[0,y,0],[2.25,.21,.14],wood);for(const x of [-.75,.75])part(root,'sphere',[x,y,-.08],[.04,.04,.02],steel);}part(root,'box',[0,.73,-.08],[.65,.17,.01],stripe);}else{part(root,'cylinder',[0,.55,0],[.67,1.10,.67],red);for(const y of [.12,.92])part(root,'cylinder',[0,y,0],[.71,.07,.71],steel);part(root,'box',[0,.57,-.34],[.36,.32,.025],stripe);part(root,'box',[0,.57,-.36],[.04,.22,.02],red);}return root;}
- function colliders(){return items.flatMap(o=>o.kind==='barrel'?[{x:o.x,z:o.z,r:.36}]:[-.85,-.425,0,.425,.85].map(t=>({x:o.x+Math.cos(o.yaw)*t,z:o.z-Math.sin(o.yaw)*t,r:.25})));}
- function sync(){nav.setDynamic(colliders());const p=hooks.player();nav.update(p.x,p.z);}
+ function colliders(){return items.filter(o=>!o.flight).flatMap(o=>o.kind==='barrel'?[{x:o.x,z:o.z,r:.36}]:[-.85,-.425,0,.425,.85].map(t=>({x:o.x+Math.cos(o.yaw)*t,z:o.z-Math.sin(o.yaw)*t,r:.25})));}
+ function sync(){const obstacles=colliders();nav.setDynamic(obstacles);hooks.dynamic?.(obstacles);const p=hooks.player();nav.update(p.x,p.z);}
  function reset(){for(const o of [...items,...projectiles,...effects])o.root.destroy();items.length=projectiles.length=effects.length=0;stock={grenade:4,barricade:3,barrel:3};throwCooldown=0;sync();}
  function replenish(){stock.grenade=Math.min(8,stock.grenade+3);stock.barricade=Math.min(7,stock.barricade+2);stock.barrel=Math.min(7,stock.barrel+2);}
  function place(kind,seed){const p=hooks.player(),yaw=seed?.yaw??hooks.yaw(),distance=kind==='barrel'?3.4:2.6,x=seed?.x??p.x-Math.sin(yaw)*distance,z=seed?.z??p.z-Math.cos(yaw)*distance;
@@ -29,8 +29,8 @@ export function createCombatKit(app,world,nav,hooks){
   for(let i=0;i<10;i++){const debris=new pc.Entity('Blast debris');app.root.addChild(debris);debris.setPosition(x,y,z);part(debris,'box',[0,0,0],[.07,.07,.07],i%2?smoke:stripe);effects.push({root:debris,life:.65,total:.65,vx:(Math.random()-.5)*10,vy:Math.random()*7,vz:(Math.random()-.5)*10});}
   if(hits>=3)hooks.toast(`CROWD CLEARED · ${hits} caught in the blast`);
  }
- function hit(o,damage){if(!items.includes(o))return;o.health-=damage;if(o.health<=0){const{x,z,kind}=o;remove(o);if(kind==='barrel')explode(x,world.terrainAt(x,z)+.55,z);else hooks.sound.hiss(.2,.25,800);}}
- function raycast(origin,dir,max){let result=null;for(const o of items){const h=o.kind==='barrel'?.58:.62,r=o.kind==='barrel'?.4:.72,t=raySphere(origin,dir,{x:o.x,y:world.terrainAt(o.x,o.z)+h,z:o.z},r);if(t<max){max=t;result={item:o,distance:t};}}return result;}
+ function hit(o,damage){if(!items.includes(o))return;o.health-=damage;if(o.health<=0){const{x,z,kind}=o,y=o.root.getPosition().y+.55;remove(o);if(kind==='barrel')explode(x,y,z);else hooks.sound.hiss(.2,.25,800);}}
+ function raycast(origin,dir,max){let result=null;for(const o of items){const h=o.kind==='barrel'?.58:.62,r=o.kind==='barrel'?.4:.72,t=raySphere(origin,dir,{x:o.x,y:(o.flight?o.root.getPosition().y:world.terrainAt(o.x,o.z))+h,z:o.z},r);if(t<max){max=t;result={item:o,distance:t};}}return result;}
  function throwGrenade(origin,dir){if(throwCooldown>0)return;if(stock.grenade<=0){hooks.toast('No grenades left. Refill at the next wave.');return;}stock.grenade--;throwCooldown=.5;const root=new pc.Entity('Grenade');app.root.addChild(root);part(root,'sphere',[0,0,0],[.18,.22,.18],steel);part(root,'sphere',[0,.1,0],[.06,.06,.06],glow);const p={root,x:origin.x+dir.x*.7,y:origin.y,z:origin.z+dir.z*.7,vx:dir.x*13,vy:Math.max(2.7,dir.y*10+3.8),vz:dir.z*13,fuse:1.35,kind:'grenade'};projectiles.push(p);hooks.sound.play('reload');}
  function spit(e,p){const root=new pc.Entity('Spitter projectile');app.root.addChild(root);part(root,'sphere',[0,0,0],[.26,.26,.26],acid);const x=e.x,z=e.z,y=world.terrainAt(x,z)+1.5,dx=p.x-x,dy=world.terrainAt(p.x,p.z)+1.05-y,dz=p.z-z,l=Math.hypot(dx,dy,dz);projectiles.push({root,x,y,z,vx:dx/l*10,vy:dy/l*10,vz:dz/l*10,kind:'acid',fuse:4});hooks.sound.tone(320,100,.2,.1,'sawtooth');}
  function update(dt){throwCooldown=Math.max(0,throwCooldown-dt);for(let i=projectiles.length-1;i>=0;i--){const p=projectiles[i];p.fuse-=dt;if(p.kind==='grenade')p.vy-=dt*12;
@@ -42,5 +42,5 @@ export function createCombatKit(app,world,nav,hooks){
  }
  for(let i=effects.length-1;i>=0;i--){const e=effects[i];e.life-=dt;if(e.life<=0){e.root.destroy();effects.splice(i,1);continue;}if(e.radius){const s=(1-e.life/e.total)*e.radius*1.6+.2;e.root.setLocalScale(s,s*.6,s);for(const r of e.root.findComponents('render'))r.enabled=e.life>.10;}else{e.vy-=dt*12;e.root.translate(e.vx*dt,e.vy*dt,e.vz*dt);}}
  }
- return{items,projectiles,get stock(){return stock;},reset,replenish,place,hit,raycast,throwGrenade,spit,explode,update,colliders};
+ return{items,projectiles,refresh:sync,get stock(){return stock;},reset,replenish,place,hit,raycast,throwGrenade,spit,explode,update,colliders};
 }

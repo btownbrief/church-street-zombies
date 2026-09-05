@@ -10,14 +10,18 @@ import {enemyType,enemyStats,scoreMultiplier} from './game/encounters.js';
 import {createCombatKit} from './game/combat-kit.js';
 import {createYeet} from './game/yeet.js';
 import {createYeetVisuals} from './game/yeet-visuals.js';
+import {createRunner,runnerAction,updateRunner,runnerReward} from './game/runner.js';
+import {createRunnerScene} from './game/runner-scene.js';
 
 const $=s=>document.querySelector(s),canvas=$('#world'),clamp=pc.math.clamp;
 const rad=Math.PI/180, audio=new GameAudio();
 const qaMode=import.meta.env.DEV&&new URLSearchParams(location.search).has('qa');
 const storageKey=qaMode?'church-street-last-light-qa-best':'church-street-last-light-best';
 let app,world,nav,arenaNav,streetNav,course,rider,models,input,camera,sun,kit,yeet,yeetVisuals;
-let shakeTime=0;
-let skate=createSkater(),lastHudSkate=null;
+let shakeTime=0,runner=createRunner(),runnerScene,runnerReturn=null,runnerPlayed=false,runnerBest=0,runnerCoinSound=0;
+const runnerStorageKey=storageKey+'-runner';
+try{runnerBest=Math.max(0,Number(localStorage.getItem(runnerStorageKey))||0);}catch{}
+let skate=createSkater(),lastHudSkate=null,skateCamYaw=0;
 let phase='loading',beforePause='wave',wave=0,score=0,best=0,kills=0,headshots=0,elapsed=0;
 let player={x:0,z:80,health:100,maxHealth:100,stamina:100},yaw=0,pitch=0;
 let zombies=[],pickups=[],corpses=[],spawned=0,spawnClock=0,waveClock=0,restClock=0,flowClock=0;
@@ -28,12 +32,13 @@ let visitedSupplies=new Set(),targetStation=0,fps=60,frameSum=0,frameCount=0,sho
 const stations=[{z:78,name:'BIG JOE & THE MEETING HOUSE'},{z:160,name:'CHERRY STREET'},{z:276,name:'BANK STREET'},{z:392,name:'COLLEGE STREET'},{z:460,name:'CITY HALL'}];
 try{best=Math.max(0,Number(localStorage.getItem(storageKey))||0);}catch{}
 $('#menu-best').textContent=String(best).padStart(5,'0');
-function active(){return phase==='wave'||phase==='rest';}
+function active(){return phase==='wave'||phase==='rest'||phase==='runner';}
 function toast(text){$('#toast').textContent=text;$('#toast').classList.add('show');toastTime=3.2;}
 function unlock(){if(document.pointerLockElement)document.exitPointerLock();input?.reset();}
-function showPhase(next){phase=next;document.body.classList.toggle('playing',['wave','rest','paused','upgrade'].includes(phase));$('#menu').hidden=phase!=='menu';$('#hud').hidden=!['wave','rest','paused','upgrade'].includes(phase);$('#pause').hidden=!active();$('#touch').hidden=!active()||!input?.touch;$('#upgrade').hidden=phase!=='upgrade';$('#pause-screen').hidden=phase!=='paused';$('#end-screen').hidden=!['dead','won'].includes(phase);if(!active())unlock();}
+function showPhase(next){phase=next;document.body.classList.toggle('playing',['wave','rest','runner','runner-result','paused','upgrade'].includes(phase));$('#menu').hidden=phase!=='menu';$('#hud').hidden=!['wave','rest','runner','runner-result','paused','upgrade'].includes(phase);$('#pause').hidden=!active();$('#touch').hidden=!active()||!input?.touch||phase==='runner';$('#runner-hud').hidden=phase!=='runner'&&!(phase==='paused'&&beforePause==='runner');$('#runner-results').hidden=phase!=='runner-result';if(phase==='runner'||phase==='runner-result'||phase==='paused'&&beforePause==='runner')$('#hud').hidden=true;$('#upgrade').hidden=phase!=='upgrade';$('#pause-screen').hidden=phase!=='paused';$('#end-screen').hidden=!['dead','won'].includes(phase);if(!active())unlock();}
 function saveBest(){if(score>best){best=score;try{localStorage.setItem(storageKey,String(best));}catch{}}}
 function resetRun(){
+  runner=createRunner();runnerReturn=null;runnerPlayed=false;runnerScene.clear();runnerScene.entrance.enabled=runnerScene.lapPortal.enabled=false;course.root.enabled=true;document.body.classList.remove('running');rider.board.enabled=true;
   yeet.reset();kit.reset();
   skate=createSkater();rider.root.enabled=false;document.body.classList.remove('skating');
   for(const z of zombies)z.root.destroy();for(const c of corpses)c.root.destroy();for(const p of pickups)p.root.destroy();zombies=[];corpses=[];pickups=[];
@@ -41,11 +46,11 @@ function resetRun(){
   damageMult=reloadMult=speedMult=staminaMult=1;shotgunUnlocked=false;weapon='pistol';capacity={pistol:12,shotgun:6};mags={pistol:12,shotgun:6};reserve={pistol:72,shotgun:18};visitedSupplies=new Set();targetStation=0;models.beacon.enabled=false;input.reset();models.pistol.enabled=true;models.shotgun.enabled=false;models.gunRoot.enabled=true;nav.update(player.x,player.z);audio.init();for(const st of stations)for(const side of [-1,1])kit.place('barrel',{x:side*3.8,z:st.z+side*12,yaw:0});startWave();input.lock();
   toast(input.touch?'Left thumb moves · right thumb aims · hold FIRE':'Click to aim · hold fire · R to reload · headshots do double damage');
 }
-function startWave(){if(wave>=10)return finish(true);wave++;spawned=0;spawnClock=1.7;waveClock=0;flowClock=0;showPhase('wave');audio.play('wave');toast(wave===2?'WAVE 02 · Green spitters attack from range.':wave===3?'WAVE 03 · Brutes incoming. Use explosives.':`WAVE ${String(wave).padStart(2,'0')} · ${waveConfig(wave).count} incoming`);}
-function changeWeapon(next){if(!active())return;if(skate.active){popSkater(skate,'shove');return;}if(!next)next=weapon==='pistol'?'shotgun':'pistol';if(next==='shotgun'&&!shotgunUnlocked){toast('Unlock the shotgun after wave 1.');return;}if(next===weapon)return;weapon=next;reloadTime=0;cooldown=.25;models.pistol.enabled=weapon==='pistol';models.shotgun.enabled=weapon==='shotgun';audio.play('ready');}
-function reload(){if(skate.active&&active()){popSkater(skate,'kickflip');return;}if(!active()||reloadTime>0||mags[weapon]>=capacity[weapon])return;if(reserve[weapon]<=0){toast('No reserve ammunition. Look for green supply cases.');return;}reloadDuration=(weapon==='pistol'?1.35:2.05)*reloadMult;reloadTime=reloadDuration;audio.play('reload');}
+function startWave(){runnerScene.entrance.enabled=false;if(wave>=10)return finish(true);wave++;spawned=0;spawnClock=1.7;waveClock=0;flowClock=0;showPhase('wave');audio.play('wave');toast(wave===2?'WAVE 02 · Green spitters attack from range.':wave===3?'WAVE 03 · Brutes incoming. Use explosives.':`WAVE ${String(wave).padStart(2,'0')} · ${waveConfig(wave).count} incoming`);}
+function changeWeapon(next){if(!active()||phase==='runner')return;if(skate.active){popSkater(skate,'shove');return;}if(!next)next=weapon==='pistol'?'shotgun':'pistol';if(next==='shotgun'&&!shotgunUnlocked){toast('Unlock the shotgun after wave 1.');return;}if(next===weapon)return;weapon=next;reloadTime=0;cooldown=.25;models.pistol.enabled=weapon==='pistol';models.shotgun.enabled=weapon==='shotgun';audio.play('ready');}
+function reload(){if(phase==='runner')return;if(skate.active&&active()){popSkater(skate,'kickflip');return;}if(!active()||reloadTime>0||mags[weapon]>=capacity[weapon])return;if(reserve[weapon]<=0){toast('No reserve ammunition. Look for green supply cases.');return;}reloadDuration=(weapon==='pistol'?1.35:2.05)*reloadMult;reloadTime=reloadDuration;audio.play('reload');}
 function pause(){if(active()){yeet.cancel();skate.charging=false;skate.charge=0;beforePause=phase;showPhase('paused');}else if(phase==='paused')resume();}
-function resume(){if(phase!=='paused')return;audio.init();showPhase(beforePause);input.lock();}
+function resume(){if(phase!=='paused')return;audio.init();showPhase(beforePause);if(beforePause!=='runner')input.lock();}
 function mute(){audio.mute(!audio.muted);$('#sound').textContent=audio.muted?'SOUND OFF':'SOUND ON';$('#sound').setAttribute('aria-label',audio.muted?'Enable audio':'Mute audio');}
 function finish(won){saveBest();showPhase(won?'won':'dead');audio.play(won?'clear':'hurt');$('#end-eyebrow').textContent=won?'MORNING COMES TO BURLINGTON':'BURLINGTON WILL REMEMBER';$('#end-title').textContent=won?'You held the street.':'The street got you.';$('#end-copy').textContent=won?'Ten waves survived. The city gets another sunrise.':'One more try. You know the way now.';$('#end-score').textContent=score.toLocaleString();$('#end-best').textContent=best.toLocaleString();$('#end-wave').textContent=wave+'/10';$('#end-detail').textContent=`${kills} zombies stopped · ${headshots} headshots · ${Math.floor(elapsed/60)}m ${Math.floor(elapsed%60)}s survived`;}
 const upgrades=[
@@ -66,7 +71,8 @@ function clearWave(){
   showPhase('upgrade');$('#upgrade-cards button').focus();
 }
 function startRest(){
-  targetStation=Math.min(4,Math.floor(wave/2));const station=stations[targetStation];models.beacon.setPosition(0,world.terrainAt(0,station.z),station.z);models.beacon.enabled=true;restClock=18;showPhase('rest');input.lock();audio.play('pickup');toast(`Supplies at ${station.name.toLowerCase()}. Move to the green beacon.`);
+  runnerPlayed=false;
+  targetStation=Math.min(4,Math.floor(wave/2));const station=stations[targetStation];models.beacon.setPosition(0,world.terrainAt(0,station.z),station.z);models.beacon.enabled=true;restClock=18;showPhase('rest');input.lock();audio.play('pickup');toast(`Supplies at ${station.name.toLowerCase()}. Purple portal: bonus runner challenge.`);const n=nav.nearest(player.x+3,player.z-7);if(n>=0){const p=nav.coords(n);runnerScene.entrance.setPosition(p.x,world.terrainAt(p.x,p.z),p.z);runnerScene.entrance.enabled=true;}
 }
 function spawnPickup(x,z,kind){const n=nav.nearest(x,z);if(n<0)return;const p=nav.coords(n),root=models.pickup(kind);root.setPosition(p.x,world.terrainAt(p.x,p.z),p.z);pickups.push({x:p.x,z:p.z,root,kind,age:0});if(pickups.length>28)pickups.shift().root.destroy();}
 function spawnZombie(){
@@ -79,7 +85,7 @@ function addZombie(point,type){const stats=enemyStats(type,wave),m=models.zombie
 
 function sightClear(origin,direction,t){const end={x:origin.x+direction.x*t,z:origin.z+direction.z*t};return arenaNav.lineClear(origin.x,origin.z,end.x,end.z,.02);}
 function fire(){
- if(!active()||skate.active||yeet.held||cooldown>0||reloadTime>0)return;
+ if(!active()||phase==='runner'||skate.active||yeet.held||cooldown>0||reloadTime>0)return;
  if(mags[weapon]<=0){audio.play('empty');cooldown=.25;reload();return;}
  mags[weapon]--;shotCount++;cooldown=weapon==='pistol'?.16:.62;recoil=weapon==='pistol'?.07:.16;flashTime=.055;audio.play(weapon);
  const origin=camera.getPosition().clone(),base=camera.forward.clone();
@@ -101,16 +107,18 @@ function kill(z,head){
  const index=zombies.indexOf(z);if(index<0)return;zombies.splice(index,1);kills++;if(head)headshots++;combo=comboTime>0?combo+1:1;comboTime=5;score+=(head?150:100)*scoreMultiplier(combo);audio.play('kill');corpses.push({root:z.root,time:0,y:z.root.getPosition().y,yaw:z.root.getEulerAngles().y});if(corpses.length>16)corpses.shift().root.destroy();
  if(kills%3===0)spawnPickup(z.x,z.z,'ammo');else if(kills%7===0||player.health<40&&Math.random()<.3)spawnPickup(z.x,z.z,'med');
 }
+function yeetTargets(){return [...zombies,...kit.items.filter(o=>o.kind==='barrel')];}
+function yeetVisible(x,z,ex,ez,target){if(target?.kind==='barrel'){const d=Math.hypot(ex-x,ez-z)||1;ex-=(ex-x)/d*.46;ez-=(ez-z)/d*.46;}return nav.lineClear(x,z,ex,ez,.05);}
 function damageEnemy(z,amount){if(!zombies.includes(z))return;z.health-=amount;z.stagger=Math.max(z.stagger,.18);models.burst(z.x,world.terrainAt(z.x,z.z)+1.1,z.z,false);if(z.health<=0)kill(z,false);hitTime=.18;}
-function equipmentAction(kind){if(!active()||skate.active)return;if(kind==='grenade')kit.throwGrenade(camera.getPosition(),camera.forward);else kit.place(kind);}
+function equipmentAction(kind){if(!active()||phase==='runner'||skate.active)return;if(kind==='grenade')kit.throwGrenade(camera.getPosition(),camera.forward);else kit.place(kind);}
 function hurt(amount){if(invulnerable>0||!active())return;player.health=Math.max(0,player.health-amount);hurtTime=.45;invulnerable=.75;audio.play('hurt');if(navigator.vibrate&&input.touch)navigator.vibrate(35);if(player.health<=0)finish(false);}
 function toggleSkate(){
- if(!active())return;yeet.cancel();
+ if(!active()||phase==='runner')return;yeet.cancel();
  if(skate.active){
   if(skate.state==='air'){toast('Land first, then hop off.');return;}
   const n=nav.nearest(player.x,player.z);if(n<0)return;const safe=nav.coords(n);player.x=safe.x;player.z=safe.z;yaw=skate.yaw/rad;pitch=0;skate.active=false;rider.root.enabled=false;models.gunRoot.enabled=true;cooldown=.25;toast('ON FOOT · Weapons ready');
  }else{
-  skate=createSkater();skate.active=true;skate.x=player.x;skate.z=player.z;skate.y=world.terrainAt(player.x,player.z);skate.yaw=yaw*rad;reloadTime=0;rider.root.enabled=true;models.gunRoot.enabled=false;toast(input.touch?'SKATING · Hold OLLIE, release to pop · FLIP auto-pops':'SKATING · W push · S brake · A/D carve · Space ollie · J/K/L tricks');
+  skate=createSkater();skate.active=true;skate.x=player.x;skate.z=player.z;skate.y=world.terrainAt(player.x,player.z);skate.yaw=yaw*rad;skateCamYaw=skate.yaw;reloadTime=0;rider.root.enabled=true;models.gunRoot.enabled=false;toast(input.touch?'SKATING · Hold OLLIE, release to pop · FLIP auto-pops':'SKATING · W push · S brake · A/D carve · Space ollie · J/K/L tricks');
  }
  input.reset();document.body.classList.toggle('skating',skate.active);updateHud();
 }
@@ -121,10 +129,11 @@ function updateSkatePlayer(dt){
  player.x=skate.x;player.z=skate.z;yaw=skate.yaw/rad;pitch=0;player.stamina=Math.min(100,player.stamina+dt*18);
  for(const e of skate.events){if(e.type==='pop'){audio.hiss(.08,.15,1100);audio.tone(180,280,.10,.12);}if(e.type==='land'){score+=e.points;reserve.pistol=Math.min(192,reserve.pistol+3);audio.play('pickup');toast(`${e.name.toUpperCase()} +${e.points} · +3 ROUNDS`);}if(e.type==='bail'){audio.play('hurt');toast('SCRAPED IT · Combo lost. Keep rolling.');}if(e.type==='grindStart'){audio.hiss(.35,.12,2200);toast(e.name.toUpperCase()+' · 50–50 GRIND');}}
  skate.events=[];
- const y=skate.y;rider.root.setPosition(skate.x,y,skate.z);rider.root.setEulerAngles(0,yaw,0);rider.body.setLocalPosition(0,-skate.charge*.35+(skate.state==='air'?.13:0),0);rider.body.setLocalEulerAngles(0,0,-steer*6);rider.board.setLocalEulerAngles(skate.state==='air'?Math.sin(skate.airTime*7)*7:0,skate.flip==='shove'?skate.flipTime/.43*360:0,skate.flip&&skate.flip!=='shove'?skate.flipTime/.43*360*(skate.flip==='heelflip'?-1:1):0);
- const desiredX=skate.x+Math.sin(skate.yaw)*3.8,desiredZ=skate.z+Math.cos(skate.yaw)*3.8;
- let cx=skate.x,cz=skate.z;for(let t=.1;t<=1;t+=.1){const x=skate.x+(desiredX-skate.x)*t,z=skate.z+(desiredZ-skate.z)*t;if(!streetNav.clear(x,z,.12))break;cx=x;cz=z;}
- camera.setPosition(cx,Math.max(y+2.15,world.terrainAt(cx,cz)+1.8),cz);camera.lookAt(skate.x-Math.sin(skate.yaw)*2,y+.8,skate.z-Math.cos(skate.yaw)*2);camera.camera.fov=pc.math.lerp(camera.camera.fov,74+Math.abs(skate.speed)*.4,dt*6);
+ const y=skate.y;rider.root.setPosition(skate.x,y,skate.z);rider.root.setEulerAngles(skate.slope/rad,yaw,-steer*3);rider.body.setLocalPosition(0,skate.state==='air'?.09:0,0);rider.body.setLocalEulerAngles(0,0,0);rider.pose(clamp(skate.charge/.45+(skate.state==='air'?.35:0),0,1),skate.state==='ride'&&forward>.1&&!skate.charging?Math.max(0,Math.sin(elapsed*8.5))*.9:0);rider.board.setLocalEulerAngles(skate.state==='air'?Math.sin(skate.airTime*7)*7:0,skate.flip==='shove'?skate.flipTime/.43*360:0,skate.flip&&skate.flip!=='shove'?skate.flipTime/.43*360*(skate.flip==='heelflip'?-1:1):0);
+ const travel=Math.hypot(skate.vx||0,skate.vz||0)>2?Math.atan2(-skate.vx,-skate.vz):skate.yaw;skateCamYaw+=Math.atan2(Math.sin(travel-skateCamYaw),Math.cos(travel-skateCamYaw))*Math.min(1,dt*3.2);
+ const desiredX=skate.x+Math.sin(skateCamYaw)*4.7+Math.cos(skateCamYaw)*.65,desiredZ=skate.z+Math.cos(skateCamYaw)*4.7-Math.sin(skateCamYaw)*.65;
+ let cx=skate.x,cz=skate.z,cameraFloor=y+.5;for(let t=.1;t<=1;t+=.1){const x=skate.x+(desiredX-skate.x)*t,z=skate.z+(desiredZ-skate.z)*t;if(!streetNav.clear(x,z,.12))break;cx=x;cz=z;cameraFloor=Math.max(cameraFloor,world.terrainAt(x,z)+course.support(x,z).height+.6);}
+ camera.setPosition(cx,Math.max(y+2.15,world.terrainAt(cx,cz)+1.8,cameraFloor),cz);camera.lookAt(skate.x-Math.sin(skateCamYaw)*2,y+.9,skate.z-Math.cos(skateCamYaw)*2);camera.camera.fov=pc.math.lerp(camera.camera.fov,74+Math.abs(skate.speed)*.4,dt*6);
 }
 function updatePlayer(dt){
  if(skate.active){updateSkatePlayer(dt);return;}
@@ -170,7 +179,27 @@ function updatePickups(dt){for(let i=pickups.length-1;i>=0;i--){const p=pickups[
  // Emergency ammunition keeps a missed pickup from ending an otherwise viable run.
  if(mags.pistol+reserve.pistol===0&&(!shotgunUnlocked||mags.shotgun+reserve.shotgun===0)&&!pickups.some(p=>p.kind==='ammo'&&Math.hypot(p.x-player.x,p.z-player.z)<12)){const n=nav.nearest(player.x+2,player.z+3);if(n>=0){const p=nav.coords(n);spawnPickup(p.x,p.z,'ammo');toast('EMERGENCY AMMO · Green case nearby');}}
 }
+function enterRunner(){
+ if(phase!=='rest'||runnerPlayed)return;const p=runnerScene.entrance.getPosition();if(Math.hypot(player.x-p.x,player.z-p.z)>3){toast('Follow the purple portal, then press E or tap ENTER.');return;}
+ if(skate.active&&skate.state==='air'){toast('Land before entering the portal.');return;}
+ runnerReturn={player:{...player},yaw,pitch,restClock,beacon:models.beacon.enabled,skating:skate.active};runnerPlayed=true;runner=createRunner();runner.active=true;yeet.cancel();input.reset();unlock();
+ for(const o of [...zombies,...corpses,...pickups,...kit.items,...kit.projectiles])o.root.enabled=false;
+ course.root.enabled=false;models.beacon.enabled=models.gunRoot.enabled=false;runnerScene.entrance.enabled=false;runnerScene.root.enabled=runnerScene.lapPortal.enabled=true;rider.root.enabled=true;rider.board.enabled=false;document.body.classList.add('running');document.body.classList.remove('skating');showPhase('runner');audio.play('pickup');toast('CHURCH ST RUNNERS · Three lanes · Two chances · Swipe to dodge');updateRunnerFrame(.001);
+}
+function finishRunner(){if(phase!=='runner')return;runner.active=false;const earned=runnerReward(runner);runnerBest=Math.max(runnerBest,Math.floor(runner.score));try{localStorage.setItem(runnerStorageKey,String(runnerBest));}catch{}$('#runner-result-title').textContent=runner.over?'Caught on Church Street.':'Run banked.';$('#runner-result-detail').textContent=`${Math.floor(runner.distance)}m · ${runner.coins} coins · ${Math.floor(runner.score)} runner points · Best ${runnerBest}`;$('#runner-reward').textContent=`+${earned.score} survival score · +${earned.pistol} rounds · +${earned.shotgun} shells · +${earned.health} health`;showPhase('runner-result');audio.play(runner.over?'hurt':'clear');}
+function returnFromRunner(){if(!runnerReturn)return;const earned=runnerReward(runner),saved=runnerReturn;runnerReturn=null;runnerScene.clear();runnerScene.lapPortal.enabled=false;course.root.enabled=true;player={...saved.player};yaw=saved.yaw;pitch=saved.pitch;restClock=Math.max(8,saved.restClock);score+=earned.score;reserve.pistol=Math.min(192,reserve.pistol+earned.pistol);reserve.shotgun=Math.min(60,reserve.shotgun+earned.shotgun);player.health=Math.min(player.maxHealth,player.health+earned.health);saveBest();
+ for(const o of [...zombies,...corpses,...pickups,...kit.items,...kit.projectiles])o.root.enabled=true;
+ models.beacon.enabled=saved.beacon;document.body.classList.remove('running');rider.board.enabled=true;skate.active=false;rider.root.enabled=false;models.gunRoot.enabled=true;input.reset();showPhase('rest');if(saved.skating)toggleSkate();else input.lock();nav.update(player.x,player.z);arenaNav.update(player.x,player.z);updateHud();toast('BACK ON CHURCH STREET · Runner supplies banked');}
+function updateRunnerFrame(dt){
+ updateRunner(runner,dt);runnerCoinSound-=dt;for(const event of runner.events){if(event.type==='pickup'){if(event.kind!=='coin'||runnerCoinSound<=0){audio.play('pickup');runnerCoinSound=.12;}if(event.kind==='creemee')toast('MAPLE SUGAR RUSH · Fly over obstacles!');if(event.kind==='magnet')toast('COIN MAGNET · 7 SECONDS');}else if(event.type==='hit'){audio.play('hurt');toast(`${event.label} · ${event.lives?'One chance left!':'Run over'}`);}else if(event.type==='jump')audio.tone(190,360,.12,.12);else if(event.type==='slide')audio.hiss(.18,.12,800);else if(event.type==='lap'){audio.play('wave');toast(`PORTAL LAP ${event.lap+1} · Keep running!`);}}
+ runner.events=[];runnerScene.update(runner);const ground=world.terrainAt(runner.x,runner.z);rider.root.enabled=runner.invulnerable<=0||Math.floor(runner.time*12)%2===0;rider.root.setPosition(runner.x,ground+runner.y-.17,runner.z);rider.root.setEulerAngles(0,0,0);rider.body.setLocalPosition(0,0,0);rider.body.setLocalEulerAngles(0,-90,0);rider.pose(0,0,runner.y>.1?0:Math.sin(runner.time*runner.speed*.8),true,runner.slide>0?1:0);
+ camera.setPosition(runner.x*.28,world.terrainAt(0,runner.z+5)+3.5+runner.y*.12,runner.z+5.6);camera.lookAt(runner.x*.3,ground+1.1,runner.z-8);camera.camera.fov=76;
+ $('#runner-distance').textContent=Math.floor(runner.distance)+'m';$('#runner-coins').textContent=runner.coins;$('#runner-lives').textContent=runner.lives===2?'● ●':'● ○';$('#runner-points').textContent=Math.floor(runner.score).toLocaleString();$('#runner-power').textContent=runner.flight>0?`CREEMEE FLIGHT ${runner.flight.toFixed(1)}s`:runner.magnet>0?`COIN MAGNET ${runner.magnet.toFixed(1)}s`:`LAP ${runner.lap+1} · ${Math.round(runner.speed*3.6)} KM/H`;
+ $('#damage').style.opacity=runner.invulnerable>1.8?.35:0;if(runner.over)finishRunner();
+}
+function continueAction(){if(phase!=='rest')return;const p=runnerScene.entrance.getPosition();if(runnerScene.entrance.enabled&&Math.hypot(player.x-p.x,player.z-p.z)<3)enterRunner();else startWave();}
 function updateHud(){
+ const portal=runnerScene.entrance.getPosition(),portalDistance=Math.hypot(player.x-portal.x,player.z-portal.z);$('#runner-enter').hidden=phase!=='rest'||runnerPlayed;$('#runner-enter').textContent=portalDistance<3?'ENTER RUNNER PORTAL · E':`RUNNER PORTAL · ${Math.round(portalDistance)}m`;
  $('#equipment-counts').textContent=`GRENADES ${kit.stock.grenade} · WALLS ${kit.stock.barricade} · BARRELS ${kit.stock.barrel}`;
  $('#yeet-meter').hidden=skate.active;$('#yeet-label').textContent=yeet.held?'RELEASE AT THE PEAK':yeet.cooldown>0?`YEET ${yeet.cooldown.toFixed(1)}s`:input.touch?'HOLD YEET · RELEASE TO LAUNCH':'HOLD Q · RELEASE TO YEET';$('#yeet-fill').style.width=(yeet.held?yeet.power*100:yeet.cooldown>0?(1-yeet.cooldown/2.6)*100:100)+'%';
  if(lastHudSkate!==`${skate.active}:${input.touch}`){lastHudSkate=`${skate.active}:${input.touch}`;
@@ -199,18 +228,19 @@ async function init(){
  sun=new pc.Entity('Last light over Burlington');sun.addComponent('light',{type:'directional',color:new pc.Color(1,.81,.57),intensity:1.5,castShadows:true,shadowDistance:80,shadowResolution:1024,shadowBias:.16,normalOffsetBias:.06,numCascades:2});sun.setEulerAngles(24,-62,0);app.root.addChild(sun);
  const fill=new pc.Entity('Evening sky');fill.addComponent('light',{type:'directional',color:new pc.Color(.54,.75,.86),intensity:.45});fill.setEulerAngles(65,120,0);app.root.addChild(fill);
  camera=new pc.Entity('Survivor camera');camera.addComponent('camera',{clearColor:new pc.Color(.38,.49,.49),fov:70,farClip:640,nearClip:.045,toneMapping:pc.TONEMAP_ACES,gammaCorrection:pc.GAMMA_SRGB});app.root.addChild(camera);
- world=buildWorld(app);await world.ready;course=buildSkateCourse(app,world);streetNav=createNavigation(world);const arenaWorld={...world,obstacles:[...world.obstacles,...course.obstacles]};arenaNav=createNavigation(arenaWorld);nav=createNavigation(arenaWorld);models=createModels(app,camera);rider=buildRider(app);
- kit=createCombatKit(app,world,nav,{player:()=>player,yaw:()=>yaw*rad,enemies:()=>zombies,toast,sound:audio,shake:n=>shakeTime=Math.max(shakeTime,n),damageEnemy,blastClear:(x,z,ex,ez)=>arenaNav.lineClear(x,z,ex,ez,.02),hurt,baseClear:(x,z)=>arenaNav.clear(x,z,.12)});
- yeet=createYeet({player:()=>player,enemies:()=>zombies,direction:()=>camera.forward,visible:(x,z,ex,ez)=>nav.lineClear(x,z,ex,ez,.05),clear:(x,z)=>arenaNav.clear(x,z,.22),floor:world.terrainAt,toast,sound:n=>audio.play(n),damage:damageEnemy,domino:n=>{score+=75;toast(`DOMINO ×${n} · +75`);},pose:(e,f)=>{e.root.setPosition(f.x,f.y,f.z);e.root.setEulerAngles(f.age*310,e.seed/rad+f.age*160,Math.sin(f.age*6)*35);e.legs.forEach((l,i)=>l.setLocalEulerAngles(Math.sin(f.age*9+i*2)*65,0,i?20:-20));e.arms.forEach((a,i)=>a.setLocalEulerAngles(-130+Math.sin(f.age*10+i)*40,0,i?55:-55));}});
- yeetVisuals=createYeetVisuals(app,world,{enemies:()=>zombies,player:()=>player,direction:()=>camera.forward,yaw:()=>yaw,visible:(x,z,ex,ez)=>nav.lineClear(x,z,ex,ez,.05),clear:(x,z)=>arenaNav.clear(x,z,.22)});
+ world=buildWorld(app);await world.ready;runnerScene=createRunnerScene(app,world);course=buildSkateCourse(app,world);streetNav=createNavigation(world);const arenaWorld={...world,obstacles:[...world.obstacles,...course.obstacles]};arenaNav=createNavigation(arenaWorld);nav=createNavigation(arenaWorld);models=createModels(app,camera);rider=await buildRider(app);
+ kit=createCombatKit(app,world,nav,{dynamic:items=>streetNav.setDynamic(items),player:()=>player,yaw:()=>yaw*rad,enemies:()=>zombies,toast,sound:audio,shake:n=>shakeTime=Math.max(shakeTime,n),damageEnemy,blastClear:(x,z,ex,ez)=>arenaNav.lineClear(x,z,ex,ez,.02),hurt,baseClear:(x,z)=>arenaNav.clear(x,z,.12)});
+ yeet=createYeet({player:()=>player,enemies:yeetTargets,direction:()=>camera.forward,visible:yeetVisible,launched:e=>{if(e.kind==='barrel')kit.refresh();},clear:(x,z)=>arenaNav.clear(x,z,.22),floor:world.terrainAt,toast,sound:n=>audio.play(n),damage:(e,n)=>e.kind==='barrel'?kit.hit(e,n):damageEnemy(e,n),domino:n=>{score+=75;toast(`DOMINO ×${n} · +75`);},pose:(e,f)=>{e.root.setPosition(f.x,f.y,f.z);e.root.setEulerAngles(f.age*310,(e.seed||0)/rad+f.age*160,Math.sin(f.age*6)*35);e.legs?.forEach((l,i)=>l.setLocalEulerAngles(Math.sin(f.age*9+i*2)*65,0,i?20:-20));e.arms?.forEach((a,i)=>a.setLocalEulerAngles(-130+Math.sin(f.age*10+i)*40,0,i?55:-55));}});
+ yeetVisuals=createYeetVisuals(app,world,{enemies:yeetTargets,player:()=>player,direction:()=>camera.forward,yaw:()=>yaw,visible:yeetVisible,clear:(x,z)=>arenaNav.clear(x,z,.22)});
  arenaNav.update(player.x,player.z);
- input=createInput(canvas,{active,equipment:equipmentAction,yeetStart:()=>{if(active()&&!skate.active)yeet.begin();},yeetEnd:()=>{if(active())yeet.release();},yeetCancel:()=>yeet.cancel(),reload,weapon:changeWeapon,pause,mute,skate:toggleSkate,trick:kind=>{if(active()&&skate.active)popSkater(skate,kind);},continue:()=>{if(phase==='rest')startWave();},blur:()=>{if(active())pause();},unlocked:()=>{if(active()&&!input.touch)pause();},lockFailed:()=>toast('Mouse capture unavailable: drag to aim and hold the mouse button to fire.'),graphics});
+ input=createInput(canvas,{active,runnerActive:()=>phase==='runner',runnerAction:action=>runnerAction(runner,action),equipment:equipmentAction,yeetStart:()=>{if(active()&&!skate.active)yeet.begin();},yeetEnd:()=>{if(active())yeet.release();},yeetCancel:()=>yeet.cancel(),reload,weapon:changeWeapon,pause,mute,skate:toggleSkate,trick:kind=>{if(active()&&skate.active)popSkater(skate,kind);},continue:continueAction,blur:()=>{if(active())pause();},unlocked:()=>{if(active()&&phase!=='runner'&&!input.touch)pause();},lockFailed:()=>toast('Mouse capture unavailable: drag to aim and hold the mouse button to fire.'),graphics});
  lowGraphics=input.touch;$('#low-setting').checked=lowGraphics;$('#low-setting').addEventListener('change',e=>{lowGraphics=e.target.checked;graphics();});graphics();window.addEventListener('resize',()=>app.resizeCanvas());
- $('#mode-switch').onclick=toggleSkate;
+ $('#mode-switch').onclick=toggleSkate;$('#runner-enter').onclick=enterRunner;$('#runner-exit').onclick=finishRunner;$('#runner-return').onclick=returnFromRunner;
  $('#start').onclick=$('#restart').onclick=$('#restart-pause').onclick=resetRun;$('#pause').onclick=pause;$('#resume').onclick=resume;$('#sound').onclick=mute;$('#back-menu').onclick=()=>{showPhase('menu');$('#menu-best').textContent=String(best).padStart(5,'0');};$('#objective').style.pointerEvents='auto';$('#objective').onclick=()=>{if(phase==='rest')startWave();};
  const updateFrame=rawDt=>{
  const dt=Math.min(rawDt,.05);frameSum+=rawDt;frameCount++;if(frameSum>1){fps=frameCount/frameSum;frameCount=frameSum=0;}
  if(toastTime>0){toastTime-=dt;if(toastTime<=0)$('#toast').classList.remove('show');}
+ if(phase==='runner'){updateRunnerFrame(dt);return;}
  if(phase==='menu'){models.gunRoot.enabled=false;rider.root.enabled=false;camera.setPosition(1.3,world.terrainAt(1.3,80)+1.75,80);camera.setEulerAngles(3,Math.sin(performance.now()*.000055)*5-5,0);return;}
  yeetVisuals.update(yeet,active()&&!skate.active);
  if(!active())return;
@@ -225,17 +255,18 @@ async function init(){
  app.on('update',updateFrame);
  app.start();showPhase('menu');$('#loading').hidden=true;
  // Read-only telemetry for reproducible browser verification; no gameplay cheats.
- window.__LAST_LIGHT__={snapshot:()=>({phase,wave,score,best,kills,headshots,elapsed,weapon,shotgunUnlocked,player:{...player},mags:{...mags},reserve:{...reserve},spawned,enemies:zombies.map(z=>({x:z.x,z:z.z,health:z.health,runner:z.runner,warning:z.warning,type:z.type,speed:z.speed,flight:!!z.flight})),equipment:{stock:kit.stock,items:kit.items.map(o=>({kind:o.kind,x:o.x,z:o.z,health:o.health})),projectiles:kit.projectiles.length},yeet:{held:yeet.held,power:yeet.power,cooldown:yeet.cooldown,flights:yeet.flights.length},pickups:pickups.map(p=>({x:p.x,z:p.z,kind:p.kind})),fps,shotCount,touch:input.touch,yaw,pitch,skate:{active:skate.active,state:skate.state,speed:skate.speed,y:skate.y,tricks:skate.totalTricks}}),environment:()=>({landmarks:world.landmarks,obstacles:world.obstacles.length,roots:world.roots.map(r=>r.name),navigableCells:nav.open.reduce((a,b)=>a+b,0)})};
+ window.__LAST_LIGHT__={snapshot:()=>({phase,wave,score,best,kills,headshots,elapsed,weapon,shotgunUnlocked,player:{...player},mags:{...mags},reserve:{...reserve},spawned,enemies:zombies.map(z=>({x:z.x,z:z.z,health:z.health,runner:z.runner,warning:z.warning,type:z.type,speed:z.speed,flight:!!z.flight})),runner:{active:runner.active,distance:runner.distance,score:runner.score,coins:runner.coins,lives:runner.lives,y:runner.y,x:runner.x,lane:runner.lane,slide:runner.slide,flight:runner.flight,magnet:runner.magnet,lap:runner.lap,over:runner.over,returnSaved:!!runnerReturn},equipment:{stock:kit.stock,items:kit.items.map(o=>({kind:o.kind,x:o.x,z:o.z,health:o.health})),projectiles:kit.projectiles.length},yeet:{held:yeet.held,power:yeet.power,cooldown:yeet.cooldown,flights:yeet.flights.length},pickups:pickups.map(p=>({x:p.x,z:p.z,kind:p.kind})),fps,shotCount,touch:input.touch,yaw,pitch,skate:{active:skate.active,state:skate.state,speed:skate.speed,y:skate.y,tricks:skate.totalTricks,x:skate.x,z:skate.z,vx:skate.vx,vz:skate.vz}}),environment:()=>({landmarks:world.landmarks,obstacles:world.obstacles.length,roots:world.roots.map(r=>r.name),navigableCells:nav.open.reduce((a,b)=>a+b,0),riderMorphs:rider.morphCount,riderPoses:rider.poses,skateRenderers:course.root.findComponents('render').length})};
  if(import.meta.env.DEV&&new URLSearchParams(location.search).has('qa')){
   const {installQA}=await import('./game/qa.js');
-  installQA({storageKey,snapshot:window.__LAST_LIGHT__.snapshot,environment:window.__LAST_LIGHT__.environment,step:seconds=>{for(let i=0;i<Math.ceil(seconds*60);i++)updateFrame(1/60);},
-   start:()=>{input.setTouch(true);resetRun();},equipment:equipmentAction,kit,yeet,pause,resume,toggleSkate,trick:kind=>popSkater(skate,kind),fire,reload,changeWeapon,
+  installQA({storageKey,runnerStorageKey,snapshot:window.__LAST_LIGHT__.snapshot,environment:window.__LAST_LIGHT__.environment,step:seconds=>{for(let i=0;i<Math.ceil(seconds*60);i++)updateFrame(1/60);},
+   start:()=>{input.setTouch(true);resetRun();},enterRunner,finishRunner,returnFromRunner,runnerAction:action=>runnerAction(runner,action),runnerState:()=>runner,portal:()=>runnerScene.entrance.getPosition().clone(),equipment:equipmentAction,kit,yeet,pause,resume,toggleSkate,trick:kind=>popSkater(skate,kind),fire,reload,changeWeapon,
    aim:(x,y,z)=>{const dx=x-player.x,dy=y-(world.terrainAt(player.x,player.z)+1.72),dz=z-player.z;yaw=Math.atan2(-dx,-dz)/rad;pitch=Math.atan2(dy,Math.hypot(dx,dz))/rad;updatePlayer(.001);},
    target:()=>{const q=zombies.filter(z=>z.warning<=0&&nav.lineClear(player.x,player.z,z.x,z.z,.02)).sort((a,b)=>Math.hypot(a.x-player.x,a.z-player.z)-Math.hypot(b.x-player.x,b.z-player.z))[0];return q?{x:q.x,y:world.terrainAt(q.x,q.z)+1.74*(q.scale||1),z:q.z,health:q.health}:null;},
    keys:(codes)=>{input.keys.clear();for(const code of codes)input.keys.add(code);},
    at:(x,z,heading=0)=>{const n=nav.nearest(x,z);const p=nav.coords(n);player.x=p.x;player.z=p.z;yaw=heading;pitch=0;nav.update(p.x,p.z);arenaNav.update(p.x,p.z);updatePlayer(.001);},
    health:n=>player.health=n,damage:hurt,forceSpawn:spawnZombie,
    combatFixture:(types=[])=>{resetRun();kit.reset();for(const z of zombies)z.root.destroy();zombies=[];spawnClock=1000;player.x=0;player.z=100;yaw=pitch=0;nav.update(0,100);arenaNav.update(0,100);updatePlayer(.001);return types.map((type,i)=>{const z=addZombie({x:0,z:97-i*1.5},type);z.warning=0;z.root.setPosition(z.x,world.terrainAt(z.x,z.z),z.z);return z;});},
+   practiceSkate:(kind='halfpipe',speed=0)=>{resetRun();kit.reset();spawnClock=1000;const f=kind==='halfpipe'?course.halfpipes[0]:course.banks[0];player.x=f.x;player.z=f.z+(kind==='halfpipe'?0:7);yaw=0;nav.update(player.x,player.z);arenaNav.update(player.x,player.z);toggleSkate();skate.speed=speed;skate.vx=0;skate.vz=-speed;updateSkatePlayer(.001);},
    lateLoadout:()=>{for(const id of ['shotgun','reload','health','capacity','speed','power','reload','health','capacity']){upgrades.find(u=>u.id===id).apply();kit.replenish();}reserve.pistol=192;reserve.shotgun=60;mags={...capacity};},
    arena:n=>{wave=n-1;for(const z of zombies)z.root.destroy();zombies=[];startWave();},
    clearEnemies:()=>{for(const z of [...zombies])kill(z,false);spawned=waveConfig(wave).count;},
