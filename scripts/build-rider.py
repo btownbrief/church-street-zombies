@@ -25,17 +25,17 @@ def line(name,pts,r,m,parent=body):
  bpy.ops.object.select_all(action='DESELECT')
  o=bpy.data.objects.new(name,curve);bpy.context.collection.objects.link(o);o.parent=parent;o.data.materials.append(m);bpy.context.view_layer.objects.active=o;o.select_set(True);bpy.ops.object.convert(target='MESH');o.select_set(False);return o
 # Tailored torso: human proportions, shoulders along the board; chest faces left.
-rings=[(.91,.14,.20),(1.00,.155,.205),(1.12,.18,.235),(1.30,.175,.25),(1.38,.145,.205)]
+rings=[(.93,.14,.20),(1.04,.155,.21),(1.20,.18,.24),(1.38,.18,.26),(1.47,.15,.21)]
 verts=[];faces=[]
 for y,rx,rz in rings:
  for i in range(24):a=i*2*math.pi/24;verts.append(xyz((rx*math.cos(a)-.04,y,rz*math.sin(a))))
 for j in range(len(rings)-1):
  for i in range(24):a=j*24+i;b=j*24+(i+1)%24;faces.append((a,b,b+24,a+24))
 faces.extend([tuple(range(23,-1,-1)),tuple(range(96,120))]);mesh=bpy.data.meshes.new('Hoodie tailored mesh');mesh.from_pydata(verts,[],faces);mesh.update();o=bpy.data.objects.new('Hoodie',mesh);bpy.context.collection.objects.link(o);finish(o,'Hoodie',cloth,body);sub=o.modifiers.new('Smooth cloth','SUBSURF');sub.levels=1;bpy.context.view_layer.objects.active=o;bpy.ops.object.modifier_apply(modifier=sub.name)
-ell('Hood folded down',(.09,1.35,.015),(.10,.075,.14),cloth);ell('Hood opening',(.07,1.40,0),(.075,.025,.09),lining)
+ell('Hood folded down',(.09,1.44,.015),(.10,.075,.14),cloth);ell('Hood opening',(.07,1.49,0),(.075,.025,.09),lining)
 line('Ribbed hem',[(.125*math.cos(i*math.pi/16)-.04,.96,.20*math.sin(i*math.pi/16)) for i in range(33)],.014,seam)
 line('Pocket seam',[(-.199,1.07,-.135),(-.219,1.015,-.09),(-.219,1.015,.10),(-.199,1.07,.14)],.005,seam)
-for z in [-.065,.065]:line('Hood drawstring',[(-.16,1.36,z),(-.224,1.25,z*.9),(-.213,1.18,z)],.003,lace)
+for z in [-.065,.065]:line('Hood drawstring',[(-.16,1.45,z),(-.224,1.33,z*.9),(-.213,1.25,z)],.003,lace)
 box('Small hem patch',(-.18,1.005,.14),(.016,.038,.05),accent,.003)
 # Bent knees; shoes point across the board instead of down its length.
 for sign in [-1,1]:
@@ -45,25 +45,25 @@ for sign in [-1,1]:
  box('Rubber sole',(-.065,.193,z),(.30,.055,.135),sole,.027);box('Suede upper',(-.065,.245,z),(.28,.10,.128),shoe,.042)
  for x in [-.10,-.07,-.04]:line('Shoelaces',[(x,.302,z-.035),(x-.012,.308,z+.035)],.003,lace)
  # Relaxed asymmetrical arms facing the nose of the board.
- shoulder=(-.055,1.31,sign*.23);elbow=(-.22,1.04,sign*.34);wrist=(-.32,.95,sign*.28)
+ shoulder=(-.055,1.40,sign*.24);elbow=(-.22,1.10,sign*.35);wrist=(-.32,.98,sign*.29)
  segment('Hoodie sleeve',shoulder,elbow,.098,.075,cloth);ell('Elbow crease',elbow,(.073,.075,.075),cloth);segment('Lower sleeve',elbow,wrist,.075,.047,cloth);ell('Cuff',wrist,(.054,.048,.05),lining)
  hand=(wrist[0]-.055,wrist[1]-.028,wrist[2]);ell('Hand',hand,(.068,.045,.05),skin)
  for k in range(3):ell('Finger',(hand[0]-.038,hand[1]-.013,hand[2]+(k-1)*.022),(.031,.015,.012),skin)
-segment('Neck',(-.035,1.34,0),(-.035,1.47,0),.068,.062,skin)
-ell('Head',(-.065,1.575,-.025),(.107,.142,.106),skin);ell('Jaw',(-.07,1.514,-.061),(.079,.074,.070),skin)
+segment('Neck',(-.035,1.44,0),(-.035,1.55,0),.068,.062,skin)
+ell('Head',(-.065,1.655,-.025),(.107,.142,.106),skin);ell('Jaw',(-.07,1.594,-.061),(.079,.074,.070),skin)
 # A fitted scalp cap: high hairline at the face, lower at the nape. No hat.
 hv=[];hf=[];segments=32;rows=10
 for j in range(rows+1):
  for i in range(segments):
   phi=i*2*math.pi/segments;theta=(.99+.72*(math.sin(phi)+1)/2)*j/rows
-  hv.append(xyz((-.065+.110*math.sin(theta)*math.cos(phi),1.575+.145*math.cos(theta),-.025+.110*math.sin(theta)*math.sin(phi))))
+  hv.append(xyz((-.065+.110*math.sin(theta)*math.cos(phi),1.655+.145*math.cos(theta),-.025+.110*math.sin(theta)*math.sin(phi))))
 for j in range(rows):
  for i in range(segments):a=j*segments+i;b=j*segments+(i+1)%segments;hf.append((a,b,b+segments,a+segments))
 hm=bpy.data.meshes.new('Fitted cropped hair');hm.from_pydata(hv,[],hf);hm.update();ho=bpy.data.objects.new('Cropped hair',hm);bpy.context.collection.objects.link(ho);finish(ho,'Cropped hair',hair,body)
-for side in [-1,1]:ell('Ear',(-.065+side*.108,1.572,-.013),(.02,.037,.027),skin)
-ell('Nose',(-.072,1.575,-.134),(.023,.035,.026),skin)
-for x in [-.112,-.031]:ell('Eye',(x,1.606,-.116),(.019,.01,.009),lining)
-line('Mouth',[(-.105,1.531,-.122),(-.072,1.526,-.13),(-.039,1.531,-.122)],.0025,shoe)
+for side in [-1,1]:ell('Ear',(-.065+side*.108,1.652,-.013),(.02,.037,.027),skin)
+ell('Nose',(-.072,1.655,-.134),(.023,.035,.026),skin)
+for x in [-.112,-.031]:ell('Eye',(x,1.686,-.116),(.019,.01,.009),lining)
+line('Mouth',[(-.105,1.611,-.122),(-.072,1.606,-.13),(-.039,1.611,-.122)],.0025,shoe)
 # Shaped maple skateboard with upturned kicks, proper trucks and four wheels.
 outline=[]
 for i in range(48):a=i*math.pi/24;outline.append((.135*math.cos(a),.155+.045*abs(math.sin(a))**8,.48*math.sin(a)))
@@ -113,9 +113,9 @@ for o in list(bpy.context.scene.objects):
   rear=max(0,min(1,(z-.1)/.11));leg=max(0,min(1,(.96-y)/.68));w=rear*leg
   push.data[i].co=inverse@Vector(xyz((x+.16*w,y-.145*w,z+.36*w-(.035 if y>1 else 0))))
   for sign,key in [(1,run_left),(-1,run_right)]:
-   side=(1 if z>0 else -1)*sign;leg=max(0,min(1,(.97-y)/.72));arm=max(0,min(1,(abs(z)-.25)/.08)) if .82<y<1.42 else 0
+   side=(1 if z>0 else -1)*sign;leg=max(0,min(1,(.97-y)/.72));arm=max(0,min(1,(abs(z)-.25)/.08)) if .82<y<1.50 else 0
    key.data[i].co=inverse@Vector(xyz((x+side*.32*leg-side*.16*arm,y+(.04+.10*max(0,side))*leg,z)))
-  turn=max(0,min(1,(y-1.40)/.10))*math.pi/2;hx=x+.065;hz=z+.025
+  turn=max(0,min(1,(y-1.49)/.10))*math.pi/2;hx=x+.065;hz=z+.025
   head_turn.data[i].co=inverse@Vector(xyz((-.065+hx*math.cos(turn)+hz*math.sin(turn),y,-.025-hx*math.sin(turn)+hz*math.cos(turn))))
   sy=.20+(y-.20)*.34 if y>.20 else y;sx=x-.1*max(0,min(1,(y-.3)/.9))
   slide.data[i].co=inverse@Vector(xyz((sx,sy,z)))

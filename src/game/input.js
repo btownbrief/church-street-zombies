@@ -5,7 +5,10 @@ export function createInput(canvas, actions){
   const capture=(element,id)=>{try{element.setPointerCapture(id);}catch{/* Synthetic or expired pointer: release still works through window listeners. */}};
   function setTouch(value){state.touch=value;document.body.classList.toggle('touch-mode',value);$('#touch-setting').checked=value;$('#touch').hidden=!value||!actions.active();actions.graphics?.();}
   state.setTouch=setTouch;setTouch(coarse);
-  function reset(){keys.clear();state.fire=false;actions.yeetCancel?.();state.drag=null;state.stickId=null;state.stickX=state.stickY=state.mx=state.my=0;$('#stick').style.transform='';}
+  // Look deltas are spread over two frames (60/40). The sum is unchanged, so aim never
+  // drifts or lags noticeably, but single-event spikes stop reading as camera shake.
+  let pmx=0,pmy=0;state.takeLook=()=>{const x=state.mx*.6+pmx*.4,y=state.my*.6+pmy*.4;pmx=state.mx;pmy=state.my;state.mx=state.my=0;return{x,y};};
+  function reset(){keys.clear();state.fire=false;actions.yeetCancel?.();state.drag=null;state.stickId=null;state.stickX=state.stickY=state.mx=state.my=0;pmx=pmy=0;$('#stick').style.transform='';}
   state.reset=reset;
   // Touch look is tuned like a mobile shooter: a fast swipe across the screen turns you
   // most of the way around, and a slow drag stays precise. Fast swipes get extra gain.
@@ -15,6 +18,9 @@ export function createInput(canvas, actions){
   window.addEventListener('keyup',e=>{keys.delete(e.code);if(e.code==='KeyQ')actions.yeetEnd();});
   window.addEventListener('blur',()=>{reset();actions.blur();});document.addEventListener('visibilitychange',()=>{if(document.hidden){reset();actions.blur();}});
   canvas.addEventListener('contextmenu',e=>e.preventDefault());
+  // Phones: a fast second tap on the HUD or an overlay must never zoom the page. CSS
+  // touch-action covers modern browsers; this catches the rest without eating button taps.
+  let lastTap=0;document.addEventListener('touchend',e=>{const now=performance.now();if(now-lastTap<350&&!e.target.closest?.('button,label,input,summary,a,details'))e.preventDefault();lastTap=now;},{passive:false});
   state.lock=()=>{if(state.touch)return;try{const result=canvas.requestPointerLock?.();result?.catch(()=>actions.lockFailed());}catch{actions.lockFailed();}};
   canvas.addEventListener('pointerdown',e=>{if(!actions.active()||actions.runnerActive?.())return;if(e.pointerType==='touch'){setTouch(true);return;}if(e.button===0){if(document.pointerLockElement===canvas)state.fire=true;else{state.fire=true;state.lock();state.drag={id:e.pointerId,x:e.clientX,y:e.clientY};capture(canvas,e.pointerId);}}});
   window.addEventListener('pointermove',e=>{if(!actions.active())return;if(document.pointerLockElement===canvas)look(e.movementX,e.movementY);else if(state.drag?.id===e.pointerId){look(e.clientX-state.drag.x,e.clientY-state.drag.y);state.drag.x=e.clientX;state.drag.y=e.clientY;}});
