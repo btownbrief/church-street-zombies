@@ -3,7 +3,7 @@
 // scales with speed, stick-driven spins that ramp up, a landing assist that finishes a
 // rotation for you, and a backflip on a fresh press of back while airborne.
 const clamp=(v,a,b)=>Math.min(b,Math.max(a,v)),angle=v=>Math.atan2(Math.sin(v),Math.cos(v));
-export const SKATE={gravity:17,minPop:5.2,maxPop:11.5,charge:.45,flipTime:.42,maxSpeed:14,flowSpeed:5,grip:7,
+export const SKATE={gravity:17,minPop:4.6,maxPop:11.5,charge:.45,railSnapX:.8,railSnapY:.5,railMagnet:1.2,flipTime:.42,maxSpeed:14,flowSpeed:5,grip:7,
  pushImpulse:4.2,pushInterval:.42,spinRate:6.5,spinResponse:14,landAssistHeight:1.4,landAssistRate:6,landTolerance:.6,landToleranceBigAir:.35,backflipTime:.62};
 export function createSkater(){return{active:false,x:0,z:0,y:0,yaw:0,speed:0,vx:null,vz:null,vy:0,state:'ride',charge:0,charging:false,airTime:0,flip:null,flipTime:0,spin:0,spinVel:0,grind:null,grindTime:0,grindCooldown:0,combo:[],pending:0,stun:0,flow:0,slope:0,events:[],totalTricks:0,pushTimer:0,pushAnim:0,backflip:null,backHeld:false,lean:0};}
 function velocity(s){if(s.vx===null||s.vz===null){s.vx=-Math.sin(s.yaw)*s.speed;s.vz=-Math.cos(s.yaw)*s.speed;}}
@@ -14,7 +14,8 @@ function popSpeed(s,vy){return vy*(1+.3*clamp(Math.hypot(s.vx,s.vz)/SKATE.maxSpe
 export function popSkater(s,kind='ollie'){
  if(!s.active||s.stun>0)return;velocity(s);
  if(s.state==='air'){if(kind!=='ollie'&&!s.flip&&s.airTime<1.3){s.flip=kind;s.flipTime=0;}return;}
- grindScore(s);beginAir(s,popSpeed(s,SKATE.minPop+clamp(s.charge/SKATE.charge,0,1)*(SKATE.maxPop-SKATE.minPop)));s.charge=0;s.charging=false;s.grindCooldown=.25;s.flip=kind==='ollie'?null:kind;s.flipTime=0;s.combo.push('Ollie');s.pending+=25;
+ // A quick tap is a small hop (eased charge curve); a full hold is the big pop.
+ grindScore(s);beginAir(s,popSpeed(s,SKATE.minPop+clamp(s.charge/SKATE.charge,0,1)**2*(SKATE.maxPop-SKATE.minPop)));s.charge=0;s.charging=false;s.grindCooldown=.25;s.flip=kind==='ollie'?null:kind;s.flipTime=0;s.combo.push('Ollie');s.pending+=25;
 }
 function bail(s,why='obstacle'){s.combo=[];s.pending=0;s.stun=.5;s.flow=0;s.backflip=null;s.events.push({type:'bail',why});}
 function land(s){
@@ -83,7 +84,10 @@ export function updateSkater(s,dt,input,nav,terrainAt,course){
    // Landing assist: in the last metre and a half the board finishes its rotation toward
    // the travel axis (either end). Holding steer means you still mean it, so it backs off.
    if(s.vy<0&&s.y-floor<SKATE.landAssistHeight&&Math.hypot(s.vx,s.vz)>1){const travel=Math.atan2(-s.vx,-s.vz),a=angle(travel-s.yaw),b=angle(travel+Math.PI-s.yaw),fix=Math.abs(a)<Math.abs(b)?a:b,rate=Math.abs(input.steer)>.3?2.5:SKATE.landAssistRate;const step=clamp(fix,-rate*h,rate*h);s.yaw+=step;s.spin+=step;}
-   if(s.vy<=1&&s.grindCooldown<=0&&Math.hypot(s.vx,s.vz)>2)for(const rail of course.rails){if(Math.abs(s.x-rail.x)<.62&&s.z>rail.z0-.3&&s.z<rail.z1+.3&&Math.abs(s.y-terrainAt(s.x,s.z)-rail.height)<.4&&Math.abs(Math.sin(s.yaw))<.5&&Math.abs(s.vx)<Math.abs(s.vz)*.6){s.grind={rail,dir:s.vz<0?-1:1};s.state='grind';s.grindTime=0;s.flip=null;s.backflip=null;s.x=rail.x;s.events.push({type:'grindStart',name:rail.name});break;}}
+   // Rails pull the board in: within about a metre sideways the flight drifts onto the
+   // rail line, and the catch window covers both the rising and falling side of a hop.
+   if(s.grindCooldown<=0&&Math.hypot(s.vx,s.vz)>2&&Math.abs(Math.sin(s.yaw))<.5)for(const rail of course.rails){const off=rail.x-s.x;if(Math.abs(off)<SKATE.railMagnet&&Math.abs(off)>.02&&s.z>rail.z0-1.5&&s.z<rail.z1+.3&&s.y-terrainAt(s.x,s.z)>rail.height-.6){s.x+=clamp(off,-2.6*h,2.6*h);}}
+   if(s.vy<=2&&s.grindCooldown<=0&&Math.hypot(s.vx,s.vz)>2)for(const rail of course.rails){if(Math.abs(s.x-rail.x)<SKATE.railSnapX&&s.z>rail.z0-.3&&s.z<rail.z1+.3&&Math.abs(s.y-terrainAt(s.x,s.z)-rail.height)<SKATE.railSnapY&&Math.abs(Math.sin(s.yaw))<.5&&Math.abs(s.vx)<Math.abs(s.vz)*.6){s.grind={rail,dir:s.vz<0?-1:1};s.state='grind';s.grindTime=0;s.flip=null;s.backflip=null;s.x=rail.x;s.events.push({type:'grindStart',name:rail.name});break;}}
    if(s.state==='air'&&s.y<=floor&&s.vy<0){s.y=floor;land(s);}
   }
  }

@@ -84,7 +84,7 @@ function spawnZombie(){
  if(!point)return false;
  addZombie(point,enemyType(wave));spawned++;return true;
 }
-function addZombie(point,type){const stats=enemyStats(type,wave),m=models.zombie(type);const z={...m,...point,...stats,type,runner:type==='runner',age:0,attack:1,stagger:0,seed:Math.random()*6.28,warning:1.05,spitClock:2+Math.random()*2,spitWindup:0};z.root.setLocalScale(stats.scale,stats.scale,stats.scale);z.root.setPosition(z.x,world.terrainAt(z.x,z.z)-1.7,z.z);zombies.push(z);return z;}
+function addZombie(point,type){const stats=enemyStats(type,wave),m=models.zombie(type);const z={...m,...point,...stats,type,runner:type==='runner',age:0,attack:1,stagger:0,seed:Math.random()*6.28,warning:1.05,spitClock:2+Math.random()*2,spitWindup:0,vx:0,vz:0,heading:Math.atan2(-(player.x-point.x),-(player.z-point.z))};z.root.setLocalScale(stats.scale,stats.scale,stats.scale);z.root.setPosition(z.x,world.terrainAt(z.x,z.z)-1.7,z.z);z.root.setEulerAngles(0,z.heading/rad,0);zombies.push(z);return z;}
 
 function sightClear(origin,direction,t){const end={x:origin.x+direction.x*t,z:origin.z+direction.z*t};return arenaNav.lineClear(origin.x,origin.z,end.x,end.z,.02);}
 function fire(){
@@ -128,7 +128,7 @@ function toggleSkate(){
 function updateSkatePlayer(dt){
  const forward=(input.keys.has('KeyW')||input.keys.has('ArrowUp')?1:0)-(input.keys.has('KeyS')||input.keys.has('ArrowDown')?1:0)+input.stickY;
  const steer=(input.keys.has('KeyD')||input.keys.has('ArrowRight')?1:0)-(input.keys.has('KeyA')||input.keys.has('ArrowLeft')?1:0)+input.stickX;
- updateSkater(skate,dt,{forward:clamp(forward,-1,1),steer:clamp(steer,-1,1),charge:input.fire||input.keys.has('Space'),look:input.mx*rad},streetNav,world.terrainAt,course);input.mx=input.my=0;
+ updateSkater(skate,dt,{forward:clamp(forward,-1,1),steer:clamp(steer,-1,1),charge:input.fire||input.keys.has('Space'),look:input.takeLook().x*rad},streetNav,world.terrainAt,course);
  player.x=skate.x;player.z=skate.z;yaw=skate.yaw/rad;pitch=0;player.stamina=Math.min(100,player.stamina+dt*18);
  for(const e of skate.events){if(e.type==='pop'){audio.hiss(.08,.15,1100);audio.tone(180,280,.10,.12);if(e.vy>8)fovPunch=Math.max(fovPunch,3);}if(e.type==='push')audio.hiss(.06,.1,700);if(e.type==='backflip'){audio.tone(220,440,.16,.12);toast('BACKFLIP · Land it flat');}if(e.type==='land'){score+=e.points;reserve.pistol=Math.min(192,reserve.pistol+3);audio.play('pickup');toast(`${e.name.toUpperCase()} +${e.points} · +3 ROUNDS`);shakeTime=Math.max(shakeTime,Math.min(.4,e.airTime*.2));}if(e.type==='touchdown')audio.hiss(.05,.08,500);if(e.type==='bail'){audio.play('hurt');shakeTime=Math.max(shakeTime,.5);toast(e.why==='sideways'?'SLAMMED · Land along your line':e.why==='flip'?'CAUGHT THE BOARD LATE · Combo lost':'SCRAPED IT · Combo lost. Keep rolling.');}if(e.type==='grindStart'){audio.hiss(.35,.12,2200);toast(e.name.toUpperCase()+' · 50–50 GRIND');}}
  skate.events=[];
@@ -157,7 +157,7 @@ function updatePlayer(dt){
 
  let f=(input.keys.has('KeyW')||input.keys.has('ArrowUp')?1:0)-(input.keys.has('KeyS')||input.keys.has('ArrowDown')?1:0)+input.stickY;
  let s=(input.keys.has('KeyD')||input.keys.has('ArrowRight')?1:0)-(input.keys.has('KeyA')||input.keys.has('ArrowLeft')?1:0)+input.stickX;
- const magnitude=Math.hypot(f,s);if(magnitude>1){f/=magnitude;s/=magnitude;}yaw-=input.mx;pitch=clamp(pitch-input.my,-74,74);input.mx=input.my=0;
+ const magnitude=Math.hypot(f,s);if(magnitude>1){f/=magnitude;s/=magnitude;}const look=input.takeLook();yaw-=look.x;pitch=clamp(pitch-look.y,-74,74);
  // Sticky aim on touch: the reticle slows while it crosses a visible zombie, so a fast
  // swipe can stop on a target. Mouse aim is never touched.
  aimStick=1;if(input.touch){const origin=camera.getPosition(),base=camera.forward;for(const z of zombies){if(z.warning>0)continue;const dx=z.x-origin.x,dy=world.terrainAt(z.x,z.z)+1.2*(z.scale||1)-origin.y,dz=z.z-origin.z,d=Math.hypot(dx,dy,dz);if(d>30)continue;const dot=(dx*base.x+dy*base.y+dz*base.z)/d;if(dot>.985&&sightClear(origin,{x:dx/d,y:dy/d,z:dz/d},d)){aimStick=.5;break;}}}
@@ -171,18 +171,18 @@ function updatePlayer(dt){
  nav.move(player,(-Math.sin(angle)*f+Math.cos(angle)*s)*speed*dt,(-Math.cos(angle)*f-Math.sin(angle)*s)*speed*dt,.28);
  const moving=magnitude>.1;footClock-=dt;if(moving&&footClock<=0){audio.play('foot');footClock=sprint?.3:.43;}
  const bob=moving?Math.sin(elapsed*(sprint?15:10))*(sprint?.045:.025):0;camera.setPosition(player.x,world.terrainAt(player.x,player.z)+1.72+bob,player.z);camera.setEulerAngles(pitch,yaw,sprint?Math.sin(elapsed*7.5)*.6:0);
- camera.camera.fov=pc.math.lerp(camera.camera.fov,(input.touch?76:70)+(sprint?7:0)+fovPunch,dt*6);
+ camera.camera.fov=pc.math.lerp(camera.camera.fov,(input.touch?82:76)+(sprint?6:0)+fovPunch,dt*6);
  if(input.fire)fire();
  const reloadDip=reloadTime>0?Math.sin((1-reloadTime/reloadDuration)*Math.PI)*.27:0;
  const gunScale=input.touch?(innerWidth<innerHeight?.7:.9):1;models.gunRoot.setLocalScale(gunScale,gunScale,gunScale);
- models.gunRoot.setLocalPosition(input.touch?(innerWidth<innerHeight?.11:.21):.25,-.24-reloadDip+Math.sin(elapsed*9)*.007*(moving?1:0),-.52+recoil);
+ models.gunRoot.setLocalPosition(input.touch?(innerWidth<innerHeight?.12:.23):.27,-.27-reloadDip+Math.sin(elapsed*9)*.007*(moving?1:0),-.62+recoil);
  models.gunRoot.setLocalEulerAngles(recoil*100,-reloadDip*90,reloadDip*50);
  models.flash.enabled=flashTime>0;models.flash.setLocalPosition(0,0,weapon==='pistol'?-.37:-.72);models.flash.setLocalScale(weapon==='pistol'?.11:.25,weapon==='pistol'?.11:.22,.25);
 }
 function updateZombies(dt){
- flowClock-=dt;if(flowClock<=0){nav.update(player.x,player.z);arenaNav.update(player.x,player.z);flowClock=.45;}
+ flowClock-=dt;if(flowClock<=0){nav.update(player.x,player.z);arenaNav.update(player.x,player.z);flowClock=.3;}
  for(const z of zombies){if(z.flight)continue;z.age+=dt;z.attack-=dt;z.stagger=Math.max(0,z.stagger-dt);if(z.warning>0){z.warning-=dt;z.root.setPosition(z.x,world.terrainAt(z.x,z.z)-Math.max(0,z.warning)/1.05*1.7,z.z);continue;}
- const dx=player.x-z.x,dz=player.z-z.z,dist=Math.hypot(dx,dz);z.root.setEulerAngles(0,Math.atan2(-dx,-dz)/rad,0);
+ const dx=player.x-z.x,dz=player.z-z.z,dist=Math.hypot(dx,dz);
  const wall=kit.items.find(o=>{const dx=z.x-o.x,dz=z.z-o.z;return o.kind==='barricade'?Math.abs(dx*Math.cos(o.yaw)-dz*Math.sin(o.yaw))<1.45&&Math.abs(dx*Math.sin(o.yaw)+dz*Math.cos(o.yaw))<1.05:Math.hypot(dx,dz)<1.15;});
  if(wall&&z.attack<=0){kit.hit(wall,z.type==='brute'?85:28);z.attack=.75;}
  z.spitClock-=dt;if(z.type==='spitter'&&dist<22&&dist>4&&arenaNav.lineClear(z.x,z.z,player.x,player.z,.08)){
@@ -191,8 +191,14 @@ function updateZombies(dt){
  }else z.spitWindup=0;
  if(dist>1.18&&!(z.type==='spitter'&&dist>6&&dist<13&&arenaNav.lineClear(z.x,z.z,player.x,player.z,.08))){const routing=nav.reachable(z.x,z.z)?nav:arenaNav,d=routing.direction(z.x,z.z,player.x,player.z),len=Math.hypot(d.x,d.z);let vx=len>.02?d.x/len:0,vz=len>.02?d.z/len:0;
    for(const other of zombies){if(other===z||other.warning>0||other.flight)continue;const ox=z.x-other.x,oz=z.z-other.z,l=Math.hypot(ox,oz);if(l>.001&&l<.85){vx+=ox/l*(.85-l)*1.4;vz+=oz/l*(.85-l)*1.4;}}
-   const v=Math.hypot(vx,vz);if(v>1){vx/=v;vz/=v;}const speed=z.speed*(z.stagger>0?.22:1);nav.move(z,vx*speed*dt,vz*speed*dt);
- }else if(dist<=1.18&&z.attack<=0&&(!skate.active||skate.y-world.terrainAt(player.x,player.z)<1.1)&&nav.lineClear(z.x,z.z,player.x,player.z,.04)){hurt(z.damage);z.attack=1.05;}
+   const v=Math.hypot(vx,vz);if(v>1){vx/=v;vz/=v;}const speed=z.speed*(z.stagger>0?.22:1);
+   // Velocity eases toward the route instead of snapping to it, so a flow-field refresh or
+   // a cell change never turns the whole horde on the same frame.
+   const ease=1-Math.exp(-(z.stagger>0?12:5.5)*dt);z.vx+=(vx*speed-z.vx)*ease;z.vz+=(vz*speed-z.vz)*ease;nav.move(z,z.vx*dt,z.vz*dt);
+ }else{z.vx*=Math.exp(-10*dt);z.vz*=Math.exp(-10*dt);}
+ if(dist<=1.18&&z.attack<=0&&(!skate.active||skate.y-world.terrainAt(player.x,player.z)<1.1)&&nav.lineClear(z.x,z.z,player.x,player.z,.04)){hurt(z.damage);z.attack=1.05;}
+ // Face the way it is walking; square up to the player only when close. Turns are rate-limited.
+ const moving=Math.hypot(z.vx,z.vz)>.4,face=dist<3.5||!moving?Math.atan2(-dx,-dz):Math.atan2(-z.vx,-z.vz);z.heading+=Math.atan2(Math.sin(face-z.heading),Math.cos(face-z.heading))*(1-Math.exp(-7*dt));z.root.setEulerAngles(0,z.heading/rad,0);
  z.root.setPosition(z.x,world.terrainAt(z.x,z.z),z.z);const pace=z.age*(z.runner?10:6)+z.seed,walk=dist>1.18;z.legs[0].setLocalEulerAngles(walk?Math.sin(pace)*28:0,0,0);z.legs[1].setLocalEulerAngles(walk?-Math.sin(pace)*28:0,0,0);z.arms[0].setLocalEulerAngles((z.spitWindup>0?-115:-60)+Math.sin(pace)*12,0,-8);z.arms[1].setLocalEulerAngles(-65-Math.sin(pace)*12,0,8);z.body.setLocalPosition(0,Math.sin(pace*2)*.025,0);if(!z.stagger)z.body.setLocalEulerAngles(dist<1.7?-12:0,0,Math.sin(pace)*2);
  }
  groanClock-=dt;if(groanClock<=0){const near=zombies.reduce((n,z)=>Math.min(n,Math.hypot(z.x-player.x,z.z-player.z)),50);if(near<24)audio.play('growl',1-near/30);groanClock=2+Math.random()*3;}
@@ -252,7 +258,7 @@ async function init(){
  app.scene.ambientLight=new pc.Color(.52,.59,.57);app.scene.exposure=1.05;app.scene.fog.type='linear';app.scene.fog.color=new pc.Color(.38,.49,.49);app.scene.fog.start=95;app.scene.fog.end=390;
  sun=new pc.Entity('Last light over Burlington');sun.addComponent('light',{type:'directional',color:new pc.Color(1,.81,.57),intensity:1.5,castShadows:true,shadowDistance:80,shadowResolution:1024,shadowBias:.16,normalOffsetBias:.06,numCascades:2});sun.setEulerAngles(24,-62,0);app.root.addChild(sun);
  const fill=new pc.Entity('Evening sky');fill.addComponent('light',{type:'directional',color:new pc.Color(.54,.75,.86),intensity:.45});fill.setEulerAngles(65,120,0);app.root.addChild(fill);
- camera=new pc.Entity('Survivor camera');camera.addComponent('camera',{clearColor:new pc.Color(.38,.49,.49),fov:70,farClip:640,nearClip:.045,toneMapping:pc.TONEMAP_ACES,gammaCorrection:pc.GAMMA_SRGB});app.root.addChild(camera);
+ camera=new pc.Entity('Survivor camera');camera.addComponent('camera',{clearColor:new pc.Color(.38,.49,.49),fov:76,farClip:640,nearClip:.045,toneMapping:pc.TONEMAP_ACES,gammaCorrection:pc.GAMMA_SRGB});app.root.addChild(camera);
  world=buildWorld(app);await world.ready;runnerScene=createRunnerScene(app,world);course=buildSkateCourse(app,world);streetNav=createNavigation(world);const arenaWorld={...world,obstacles:[...world.obstacles,...course.obstacles]};arenaNav=createNavigation(arenaWorld);nav=createNavigation(arenaWorld);models=createModels(app,camera);rider=await buildRider(app);
  kit=createCombatKit(app,world,nav,{dynamic:items=>streetNav.setDynamic(items),player:()=>player,yaw:()=>yaw*rad,enemies:()=>zombies,toast,sound:audio,shake:n=>shakeTime=Math.max(shakeTime,n),damageEnemy,blastClear:(x,z,ex,ez)=>arenaNav.lineClear(x,z,ex,ez,.02),hurt,baseClear:(x,z)=>arenaNav.clear(x,z,.12)});
  yeet=createYeet({player:()=>player,enemies:yeetTargets,direction:()=>camera.forward,visible:yeetVisible,launched:e=>{if(e.kind==='barrel')kit.refresh();},launch:(e,power)=>{slowMo(.4,.18);shakeTime=Math.max(shakeTime,.35+power*.3);fovPunch=Math.max(fovPunch,4+power*4);if(navigator.vibrate&&input.touch)navigator.vibrate(20);},impact:(e,f)=>{if(e.kind==='barrel')return;const bonus=Math.round(f.distance*12)+(f.hits?f.hits*60:0);if(bonus>0){score+=bonus;toast(`YEET · ${Math.round(f.distance)}M${f.hits?` · ${f.hits} BOWLED`:''} · +${bonus}`);}},clear:(x,z)=>arenaNav.clear(x,z,.22),floor:world.terrainAt,toast,sound:n=>audio.play(n),damage:(e,n)=>e.kind==='barrel'?kit.hit(e,n):damageEnemy(e,n),domino:n=>{score+=75;toast(`DOMINO ×${n} · +75`);if(n>=2)slowMo(.3,.3);},pose:(e,f)=>{e.root.setPosition(f.x,f.y,f.z);e.root.setEulerAngles(f.age*310,(e.seed||0)/rad+f.age*160,Math.sin(f.age*6)*35);e.legs?.forEach((l,i)=>l.setLocalEulerAngles(Math.sin(f.age*9+i*2)*65,0,i?20:-20));e.arms?.forEach((a,i)=>a.setLocalEulerAngles(-130+Math.sin(f.age*10+i)*40,0,i?55:-55));}});
@@ -299,7 +305,8 @@ async function init(){
    setAmmo:(mag,stock)=>{mags[weapon]=mag;reserve[weapon]=stock;},
    station:()=>stations[targetStation],nav,course,world,refresh:updateHud,
    applyUpgrade:id=>{upgrades.find(u=>u.id===id).apply();startRest();},
-   stop:()=>{input.keys.clear();if(active())pause();}
+   stop:()=>{input.keys.clear();if(active())pause();},
+   camera:(x,y,z,lx,ly,lz)=>{camera.setPosition(x,y,z);camera.lookAt(lx,ly,lz);app.renderNextFrame=true;}
   });
  }
  }catch(error){console.error(error);$('#loading').hidden=false;$('#load-message').textContent='The game could not load: '+error.message;}

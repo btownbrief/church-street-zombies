@@ -57,3 +57,15 @@ Catalog commit: btownbrief/btownbrief.github.io@694cff5. No Hub source edit is n
 - Real Chrome on the Mac: skating at 50 km/h with the ported follow camera, no console errors.
 - Not verified: a physical phone in hand (sticky aim, swipe gain, sprint threshold are tuned by reasoning and emulation, not thumbs), and human balance of the new YEET distance bonus.
 - Same day: the four world modules touched by the church-street-world visual pass (commit 69088bd: crosswalk orientation, paving bands, firehouse banners, procedural sky, context-building windows, paving medallion) were copied in byte-for-byte and the manifest re-pinned to that commit. Tests, build, headless integration run and phone screenshots re-checked with no errors.
+
+## September 5 — feel pass 2 (horde motion, camera, rider, rails, phone zoom)
+
+- Horde: each zombie now eases its velocity toward the route and turns at a limited rate, facing its walking direction until it is within 3.5 m of the player. Before, every zombie snapped to the fresh flow field and pivoted toward the player on the same frame, which read as the whole crowd shifting together whenever the player strafed. Flow field refresh is 0.3 s.
+- Camera: look deltas are spread over two frames (60/40, total preserved) for mouse and touch. First-person FOV 76 desktop / 82 touch (was 70 / 76); the weapon sits 10 cm further out. Sprint FOV bump 6.
+- Rider: torso lengthened in `scripts/build-rider.py` (hoodie rings to 1.47 m, shoulders 1.40, head centre 1.655) and the GLB rebuilt with Blender 5.2; the RunnerFacing and run-arm morphs follow the new heights. Six morph targets still export.
+- Rails: tap ollie 4.6 m/s (was 5.2) with a squared charge curve so a quick press is a small hop; rail catch window 0.8 m sideways / 0.5 m vertical, catches on the way up as well as down, and a 1.2 m rail magnet drifts the flight onto the rail line. Existing rails lowered to 0.55 m (Bank transfer 0.7). Six new rails (Pharmacy, Cherry crossing, Bank Street long, Bookstore, College crossing, City Hall) and all eleven street benches ride as 0.5 m rails; benches draw nothing new. Every rail was checked against `world.obstacles` in the browser: zero hits.
+- Phone zoom: `touch-action: manipulation` on html/body, `user-scalable=no`, and a touchend guard that cancels a second tap within 350 ms on non-button targets.
+- `npm test`: **39 passing** (two new: tap hop onto a low rail via the magnet; bench rails and rail/transition clearance). `npm run build`: passes.
+- Headless PlayCanvas checks at `?qa=1`: skate course 6, horde equipment and YEET 17, general integration 29, all PASS, no console errors. A strafing simulation over 3 s of wave 4 showed a maximum per-frame zombie step of 0.099 m (no teleporting).
+- Screenshots inspected: rider side/three-quarter, first-person with zombies, Pharmacy rail, benches 3 and 4, 844×390 phone HUD.
+- Not verified: a physical phone in hand (double-tap zoom, thumb timing on OLLIE), and human feel of the camera filter on a real mouse.
